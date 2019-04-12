@@ -177,7 +177,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
         searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setQueryHint(getString(R.string.actionbar_search_hint));
+        //searchView.setQueryHint(getString(R.string.actionbar_search_hint));
         searchView.setGravity(Gravity.END);
         final LinearLayout searchBar = (LinearLayout) searchView.findViewById(R.id.search_bar);
         LayoutTransition layoutTransition = new LayoutTransition();

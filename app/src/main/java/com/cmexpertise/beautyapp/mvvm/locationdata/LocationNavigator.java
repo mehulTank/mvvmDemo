@@ -14,26 +14,19 @@
  *  limitations under the License
  */
 
-package com.cmexpertise.beautyapp.mvvm.login;
+package com.cmexpertise.beautyapp.mvvm.locationdata;
 
 import com.cmexpertise.beautyapp.model.ResponseBase;
-import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
+import com.cmexpertise.beautyapp.model.locationModel.LocationResponseData;
 
 /**
  * Created by kailash patel
  */
 
-public interface LoginNavigator
+public interface LocationNavigator
 {
 
     void handleError(Throwable throwable);
-    void login();
-    void register();
-    void forgotPassword();
-    void fbLogin();
-    void googleLogin();
-
-    void  loginResponce(LoginResponse userResponse);
-    void  addDeviceResponce(ResponseBase userResponse);
+    void locationResponce(LocationResponseData userResponse);
 
 }

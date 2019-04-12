@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +19,11 @@ import android.widget.LinearLayout;
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.ActivityLoginBinding;
+import com.cmexpertise.beautyapp.model.ResponseBase;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
-import com.cmexpertise.beautyapp.model.loginModel.LoginUserData;
 import com.cmexpertise.beautyapp.mvvm.login.LoginNavigator;
 import com.cmexpertise.beautyapp.mvvm.login.LoginViewModel;
+import com.cmexpertise.beautyapp.util.Preferences;
 import com.cmexpertise.beautyapp.util.Utils;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -64,10 +67,11 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
     private String fbID = "";
     private String userName = "";
     private String socialEmail = "";
+    private String login_type = "0";
     private boolean gpLoginbtnclick = false;
 
     private GoogleApiClient mGoogleApiClient;
-    private ActivityLoginBinding activityLoginBinding;
+    private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;
 
 
@@ -87,10 +91,10 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
     @Override
     public void initComponents() {
 
-        activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginViewModel = new LoginViewModel(this);
-        activityLoginBinding.setLoginViewModel(loginViewModel);
-        llContainer = activityLoginBinding.activityLlmain;
+        binding.setLoginViewModel(loginViewModel);
+        llContainer = binding.activityLlmain;
 
         Log.d("initComponents", "TOKEN==" + FirebaseInstanceId.getInstance().getToken());
 
@@ -115,15 +119,16 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
 
 
         Utils.hideKeyboard(LoginActivity.this);
-        email = activityLoginBinding.activityLoginEtUserName.getText().toString();
-        password = activityLoginBinding.activityLoginEtPassword.getText().toString();
+        email = binding.activityLoginEtUserName.getText().toString();
+        password = binding.activityLoginEtPassword.getText().toString();
         final String checkValidation = loginViewModel.isEmailAndPasswordValid(email, password);
 
         if (!checkValidation.isEmpty()) {
             Utils.snackbar(llContainer, checkValidation, true, LoginActivity.this);
         } else {
             progress = Utils.showProgressDialog(LoginActivity.this);
-            loginViewModel.checkLogin(email, password, "0");
+            login_type = "0";
+            loginViewModel.checkLogin(email, password, login_type);
         }
     }
 
@@ -196,30 +201,58 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
 
 
     @Override
-    public void loginResponce(LoginResponse userResponse) {
-
-        Utils.hideProgressDialog(LoginActivity.this, progress);
-        Utils.snackbar(llContainer, "" + userResponse.getResponsedata().getMessage(), true, LoginActivity.this);
+    public void loginResponce(LoginResponse responseBase) {
 
 
-        if (userResponse.getResponsedata().getSuccess() == 1) {
+        if (responseBase != null) {
+            if (responseBase.getResponsedata().getSuccess() == 1) {
+                Preferences.writeString(this, Preferences.IS_SKIPED, "");
+                Preferences.writeString(this, Preferences.USER_ID, "");
+
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Preferences.writeString(LoginActivity.this, Preferences.USER_ID, responseBase.getResponsedata().getUserData().getId());
+                Preferences.writeString(LoginActivity.this, Preferences.USER_EMAIL_ID, responseBase.getResponsedata().getUserData().getEmail());
+                Preferences.writeString(LoginActivity.this, Preferences.USER_NAME, responseBase.getResponsedata().getUserData().getFname() + " " + responseBase.getResponsedata().getUserData().getLname());
+                Preferences.writeString(LoginActivity.this, Preferences.FIRST_NAME, responseBase.getResponsedata().getUserData().getFname());
+                Preferences.writeString(LoginActivity.this, Preferences.LAST_NAME, responseBase.getResponsedata().getUserData().getLname());
+                Preferences.writeString(LoginActivity.this, Preferences.USER_PHONE_NO, responseBase.getResponsedata().getUserData().getPhone());
+                Preferences.writeString(LoginActivity.this, Preferences.DEVICE_ID, Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+                Preferences.writeString(LoginActivity.this, Preferences.DEVICE_TOKEN, token);
+                Snackbar.make(llContainer, responseBase.getResponsedata().getMessage(), Snackbar.LENGTH_LONG).show();
 
 
-            LoginUserData loginDetailsModel = userResponse.getResponsedata().getUserData();
+                Preferences.writeString(LoginActivity.this, Preferences.LOGIN_TYPE, String.valueOf(login_type));
+                loginViewModel.addDeviceLocation(responseBase.getResponsedata().getUserData().getId(), Preferences.readString(LoginActivity.this, Preferences.DEVICE_ID, ""),
+                        token, "Android");
 
-            BeautyApplication.getmInstance().savePreferenceDataString(getString(R.string.preferances_userID), loginDetailsModel.getId());
-            BeautyApplication.getmInstance().savePreferenceDataString(getString(R.string.preferances_userName), loginDetailsModel.getFname());
-            BeautyApplication.getmInstance().savePreferenceDataString(getString(R.string.preferances_userEmail), loginDetailsModel.getEmail());
-            BeautyApplication.getmInstance().savePreferenceDataString(getString(R.string.preferances_userPhone), loginDetailsModel.getPhone());
-            BeautyApplication.getmInstance().savePreferenceDataBoolean(getString(R.string.preferances_isNormallogin), false);
-            goToHome();
 
-        } else {
+            } else {
 
-            Utils.snackbar(llContainer, "" + userResponse.getResponsedata().getMessage(), true, LoginActivity.this);
+                Utils.hideProgressDialog(LoginActivity.this, progress);
+                Snackbar.make(llContainer, responseBase.getResponsedata().getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+
 
         }
 
+
+    }
+
+    @Override
+    public void addDeviceResponce(ResponseBase responseBase) {
+
+        Utils.hideProgressDialog(this, progress);
+
+        if (responseBase != null && responseBase.getResponsedata() != null && responseBase.getResponsedata().getSuccess() == 1) {
+
+
+            Intent intent = new Intent(LoginActivity.this, SelectLocationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+
+        }
     }
 
 
@@ -255,8 +288,8 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
     private void openHomeActivity() {
 
         BeautyApplication.getmInstance().savePreferenceDataBoolean(getString(R.string.preferances_islogin), true);
-       // Intent intent = new Intent(getApplicationContext(), MenuBarActivity.class);
-       // startActivity(intent);
+        // Intent intent = new Intent(getApplicationContext(), MenuBarActivity.class);
+        // startActivity(intent);
         overridePendingTransition(R.anim.anim_right_in, R.anim.anim_left_out);
         finish();
     }
@@ -286,7 +319,8 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
                                 String phone = "";
 
                                 progress = Utils.showProgressDialog(LoginActivity.this);
-                                loginViewModel.fbLogin(userName, lastname, email, phone, "1", fbID);
+                                login_type = "1";
+                                loginViewModel.fbLogin(userName, lastname, email, phone, login_type, fbID);
 
                             }
 
@@ -373,7 +407,8 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
                     String email = acct.getEmail();
 
                     progress = Utils.showProgressDialog(LoginActivity.this);
-                    loginViewModel.googleLogin(firstName, lastName, email, "", "2", idToken);
+                    login_type = "2";
+                    loginViewModel.googleLogin(firstName, lastName, email, "", login_type, idToken);
                 }
             }
 

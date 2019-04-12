@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
+import com.cmexpertise.beautyapp.model.ResponseBase;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
 import com.cmexpertise.beautyapp.util.Utils;
 import com.cmexpertise.beautyapp.webservice.UsersService;
@@ -39,11 +40,11 @@ public class LoginViewModel extends Observable {
     public String isEmailAndPasswordValid(String email, String password) {
         // validate email and password
         if (TextUtils.isEmpty(email)) {
-            return context.getString(R.string.val_enter_email);
+            return context.getString(R.string.str_enter_email);
         } else if (!Utils.isValidEmail(email)) {
-            return context.getString(R.string.val_enter_valid_email);
+            return context.getString(R.string.str_valid_email_enter);
         } else if (TextUtils.isEmpty(password)) {
-            return context.getString(R.string.val_enter_password);
+            return context.getString(R.string.str_enter_password);
         } else {
             return "";
         }
@@ -98,6 +99,32 @@ public class LoginViewModel extends Observable {
         compositeDisposable.add(disposable);
     }
 
+
+    public void addDeviceLocation(String uID, String deviceId,String fbToken,String deviceType) {
+
+
+        BeautyApplication appController = BeautyApplication.getmInstance();
+        UsersService usersService = appController.getUserService();
+
+
+        Disposable disposable = usersService.addDeviceToken(uID,deviceId,fbToken,deviceType)
+                .subscribeOn(appController.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseBase>() {
+                    @Override
+                    public void accept(ResponseBase userResponse) throws Exception {
+                        loginNavigator.addDeviceResponce(userResponse);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        loginNavigator.handleError(throwable);
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
 
     private void unSubscribeFromObservable() {
         if (compositeDisposable != null && !compositeDisposable.isDisposed()) {

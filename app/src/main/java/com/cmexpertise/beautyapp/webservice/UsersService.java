@@ -3,6 +3,8 @@ package com.cmexpertise.beautyapp.webservice;
 
 
 import com.cmexpertise.beautyapp.model.ResponseBase;
+import com.cmexpertise.beautyapp.model.categoryModel.CategoryResponseData;
+import com.cmexpertise.beautyapp.model.locationModel.LocationResponseData;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponseData;
 
@@ -28,6 +30,11 @@ public interface UsersService
     @POST("user_login")
     Observable<LoginResponse> doLogin(@Field("email") String email, @Field("password") String password, @Field("login_type") String login_type);
 
+    @FormUrlEncoded
+    @POST("add_device")
+    Observable<ResponseBase> addDeviceToken(@Field("user_id") String user_id, @Field("device_id") String device_id, @Field("device_token") String device_token, @Field("device_type") String device_type);
+
+
 
     @FormUrlEncoded
     @POST("user_login")
@@ -47,4 +54,9 @@ public interface UsersService
     @POST("user_register")
     Observable<ResponseBase> doRegister(@Field("fname") String fname, @Field("lname") String lname, @Field("email") String email, @Field("password") String password, @Field("phone") String phone, @Field("login_type") String login_type);
 
+    @POST("location_list")
+    Observable<LocationResponseData> doGetLocation();
+
+    @POST("category_list")
+    Observable<CategoryResponseData> doGetCategoryList();
 }

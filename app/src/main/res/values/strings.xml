@@ -4,60 +4,162 @@
     <string name="app_name_new">Beauty App</string>
     <string name="facebook_app_id">658017587735861</string>
     <string name="fb_login_protocol_scheme">fb658017587735861</string>
+    <!--  Login Activity -->
+
+    <string name="hello">Hello Again!</string>
+
+    <string name="lbl_email">Email</string>
+    <string name="lbl_password">Password</string>
+
+
+    <string name="lbl_first_name">Firstname</string>
+    <string name="lbl_last_name">Lastname</string>
+    <string name="lbl_phone_number">Phone Number</string>
+    <string name="lbl_retype_password">Confirm Password</string>
+
+    <string name="str_login">Login</string>
+    <string name="lbl_register">Register</string>
+    <string name="str_create">Signup</string>intentData.getString("logintype")
+    <string name="str_or">Or</string>
+    <string name="str_sigin_using">Sign in Using</string>
+
+    <string name="str_face_book">Facebook</string>
+    <string name="str_google">Google</string>
+    <string name="str_sign_up">Sign Up</string>
+    <string name="str_terms">Terms</string>
+
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="lbl_search">Search</string>
+    <string name="msg_wait">Please Wait...!!!</string>
+    <string name="msg_error">Something went wrong.</string>
+    <string name="msg_no_connnection">Internet Connection Not Available</string>
+    <string name="extra_city_id">CityId</string>
+    <string name="extra_city_name">CityName</string>
+    <string name="extra_latitude">Latitude</string>
+    <string name="extra_longitude">Longitude</string>
+    <string name="extra_from_menu">From Menu</string>
+    <string name="string_some_thing_wrong">Something went wrong.</string>
+    <string name="msg_no_data">No data found</string>
+    <string name="msg_no_internet">Internet Connection Not Available</string>
+    <string name="title_select_location">Select Location</string>
+    <string name="title_select_category">Select Categories</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_search">Search</string>
+    <string name="menu_settings">Setting</string>
+    <string name="menu_navigation">Navigation</string>
+    <string name="image">image</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="schedule">Schedule</string>
+    <string name="delete">Delete</string>
+    <string name="menu_review">Review</string>
+    <string name="menu_booking">Booking</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_info">Info</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="skip">Skip</string>
+    <string name="fb_app_id">658017587735861</string>
+    <string name="string_getting_json_title">Please wait...</string>
+    <string name="str_no_data">No data avaliable.</string>
+
+    <string name="search">Search]</string>
+    <string name="Cancel">Cancel</string>
+    <string name="gps_network_not_enabled">GPS is not enable</string>
+    <string name="open_location_settings">Open Location</string>
+    <string name="lbl_Save">Save</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="submit">Submit</string>
+    <string name="who_we_are_title">Who We Are</string>
+    <string name="cont1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</string>
+    <string name="emailUs">Email Us</string>
+    <string name="contact_email">beautyapp@beautylink.com</string>
+    <string name="callUs">Call Us</string>
+    <string name="contact_num">+91 98765 43210</string>
+    <string name="website">Website</string>
+    <string name="website_link">www.beautylink.com</string>
+    <string name="RateUs">Rate Us</string>
+    <string name="rate_app_content">Rate us to our app.</string>
+    <string name="change_pass">Change Password</string>
+    <string name="lbl_conf_password">Confirm Password</string>
+    <string name="lbl_new_password">New Password</string>
+    <string name="str_save">Save</string>
+    <string name="Error">Error</string>
+    <string name="help_us_to_do_better">Help us to do better</string>
+    <string name="quick_feedback">Mind giving us a quick feedback?</string>
+    <string name="nope">Nope</string>
+    <string name="yeahSure">Yeah, Sure!</string>
+    <string name="no_internet_connection">No internet connection. Please check your internet connection.</string>
+    <string name="setting">Setting</string>
+    <string name="no_record_found">No record found</string>
+    <string name="wifi">Wifi</string>
+    <string name="card">Card</string>
+    <string name="tv">TV</string>
+    <string name="ac">AC</string>
+    <string name="parking">Parking</string>
+    <string name="offers">Offers</string>
+    <string name="amenities">Amenities</string>
+    <string name="km_away">0 KM Away</string>
+    <string name="opening_time">Open Till 9:30 PM</string>
+    <string name="orconnectopt">---------- OR CONNECT WITH ----------</string>
+    <string name="dont_have_acc">Dont have an account ?</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="nav_offers">Offers</string>
+    <string name="bookings">Bookings</string>
     <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="logout">Logout</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email_id">beauty@beauty.com</string>
+    <string name="location">Location</string>
+    <string name="apply">Apply</string>
+    <string name="use_my_location_select">Use my location (Select)</string>
+    <string name="or">Or</string>
+    <string name="change_language">Change Language</string>
+    <string name="changepassword">Change Password</string>
+    <string name="change_category">Change Category</string>
+    <string name="changelocation">Change Location</string>
+    <string name="pushnotification">Push Notification</string>
+    <string name="follow_us">Follow Us</string>
+    <string name="review">Review</string>
+    <string name="empty_state_content">Empty state content</string>
+    <string name="try_again">Try again</string>
+    <string name="salloon_name">Unknown Salloons</string>
+    <string name="welcome_guest">WelCome Guest!</string>
+
+    <string name="kmaway">km away</string>
+    <string name="open_till">Open Till</string>
 
 
-    <!-- Navigation Menu -->
-    <string name="menu_product">Product</string>
-    <string name="menu_my_cart">My Cart</string>
-    <string name="menu_my_profile">My Profile</string>
-    <string name="menu_ewallet">E-Wallet</string>
-    <string name="menu_notification">Notification</string>
-    <string name="menu_myorder">My Orders</string>
-    <string name="menu_logout">Logout</string>
-    <string name="menu_profile">Profile</string>
-    <string name="menu_book_service">Book Service</string>
-    <string name="menu_product_details">Product Details</string>
-    <string name="menu_may_cart">My Cart</string>
-    <string name="menu_change_psw">Change Password</string>
-    <string name="menu_confirm_order">Confirm Order</string>
-    <string name="menu_thank_you">Thank You!</string>
-    <string name="menu_add_wallate">Add Wallate</string>
-
-    <integer name="swing_anim_time">750</integer>
-    <string name="hint_search">Search</string>
-    <string name="actionbar_search_hint">Type here</string>
-
-    <!-- Common strings -->
-    <string name="please_wait">Please wait&#8230;</string>
-    <string name="check_connection">Check your network connection</string>
-    <string name="something_is_wrong">Something is wrong,Please try again latter.</string>
-    <string name="some_error_occurred">Some Error Occurred</string>
-    <string name="openDrawer">Navigation View Closed</string>
-    <string name="closeDrawer">Navigation View</string>
-
-
-    <!-- Validation Strings  -->
-    <string name="val_enter_username">Please enter username.</string>
-    <string name="val_enter_password">Please enter password.</string>
-    <string name="val_enter_email">Please enter email address.</string>
-    <string name="val_enter_valid_email">Please enter valid email address.</string>
-    <string name="val_enter_phone">Please enter phone number.</string>
-    <string name="val_enter_carname">Please enter car name.</string>
-    <string name="val_enter_date">Please select date.</string>
-    <string name="val_enter_time">Please select time.</string>
-    <string name="val_enter_type">Please select Service-Type.</string>
-    <string name="val_enter_customer_name">Please enter customer name.</string>
-    <string name="val_enter_amount">Please enter amount.</string>
-    <string name="val_enter_address">Please enter address.</string>
-    <string name="val_enter_customer_phone">Please enter customer phone number.</string>
-    <string name="val_enter_customer_address">Please enter customer address.</string>
-    <string name="val_enter_old_password">Please enter oldPassword.</string>
-    <string name="val_enter_new_password">Please enter newPassword.</string>
-    <string name="val_enter_confirm_password">Please enter confirmPassword.</string>
-    <string name="val_enter_new_confirm_password_not_match">New password and confirm password dose not match.</string>
-
-
+    <string name="english">English</string>
+    <string name="italy">Italy</string>
+    <string name="arabic">Arabic</string>
+    <string name="select_lunguage">Select Language</string>
+    <string name="rate_never">Never</string>
+    <string name="rate_later">Later</string>
+    <string name="rate_now">Now</string>
+    <string name="ok">OK</string>
+    <string name="app_must_update">App New Version Avialble You must Update</string>
+    <string name="app_new_version_aviale">App New Version Avialble You want Update?</string>
+    <string name="cancel">Cancel</string>
+    <string name="string_cheack_your_internet_conection">Check Your Internet Connection</string>
+    <string name="string_internet_connection_not_available">Internet Connection Not Available</string>
+    <string name="Profile">Profile</string>
+    <string name="Offers">Offers</string>
+    <string name="Off">% Off</string>
+    <string name="Bookings">Bookings</string>
+    <string name="AboutUs">About Us</string>
+    <string name="notification">Notification</string>
+    <string name="edit">Edit</string>
     <string name="str_enter_mobile_number">Please enter mobile number</string>
     <string name="str_valid_mobile_number">Mobile number should contain 8 to 13 digits</string>
     <string name="str_enter_first_name">Please enter first name</string>
@@ -70,64 +172,41 @@
     <string name="str_confrim_password">Please enter confirm password</string>
     <string name="str_pass_and_conf_pass_does_not_match">Password and confirm password does not match</string>
 
+    <string name="please_select_date">Please select date</string>
+    <string name="Please_select_time">Please select time</string>
+    <string name="error_while_booking_apt">Error zwhile booking appointment.</string>
+    <string name="are_you_sure_cancel_booking">Are you sure to cancel this booking?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="atleast_one_category">Please select atleast one category.</string>
+    <string name="selected_item">Selected Item :</string>
+    <string name="Please_enter_old_password">Please enter old password</string>
+    <string name="Please_enter_new_password">Please enter new password</string>
+    <string name="Please_enter_confirm_password">Please enter confirm password</string>
+    <string name="passwrod_not_match">Password does not match</string>
+    <string name="please_enter_password">Please enter valid password</string>
+    <string name="please_enter_valid_password">Please enter valid password</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="passwords_must_be_same">Please enter new and confirm password are same.</string>
 
-    <string name="signin">Sign In</string>
-    <string name="signup">Sign Up</string>
-    <string name="forgot_psw">Forgot Password</string>
-    <string name="create_new_account">Create a new account</string>
-    <string name="forgot_your_details">Forgot your details?</string>
-    <string name="already_have_account">Already have an Account?</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="Please_provide_permission">Please provide permission to run the application.!!</string>
+    <string name="device_not_supported">This device is not supported.</string>
+    <string name="provide_permission_for_location">Please provide permission to get your location.!!</string>
+    <string name="Please_enter_first_name">Please enter first name</string>
+    <string name="Please_enter_last_name">Please enter last name</string>
+    <string name="Please_enter_email">Please enter email</string>
+    <string name="fb_success_msg">You are successfully registered using facebook account, you can now simply login by clicking on facebook button.</string>
+    <string name="google_success_msg">You are successfully registered using google account, you can now simply login by clicking on google button.</string>
+    <string name="successful">Successful</string>
+    <string name="login_before_review">Please login in your account before giving review.</string>
+    <string name="give_some_rating">Please give some rating.</string>
+    <string name="give_review">Please give Review.</string>
+    <string name="select_services">Select Services</string>
+    <string name="login_first">Please login first.</string>
+    <string name="select_atlease_one_staff">Please select atleast one staff.</string>
+    <string name="select_atlease_one_service">Please select atleast one service.</string>
 
-    <string name="username">Username</string>
-    <string name="email">E-mail</string>
-    <string name="phone">Phone</string>
-    <string name="fname">Firstname</string>
-    <string name="password">Password</string>
-    <string name="address">Address</string>
-
-
-    <string name="btn_signin">Sign-In</string>
-    <string name="btn_signup">Sign-Up</string>
-    <string name="btn_change">Change Password</string>
-    <string name="forgot_password">Forgot Password</string>
-
-    <!-- Notification Filter  -->
-    <string name="lbl_All">All</string>
-    <string name="lbl_newsletter">Newsletter</string>
-    <string name="lbl_promotional_offer">Promotional Offer</string>
-    <string name="lbl_new_product_launch">New Product launch</string>
-    <string name="lbl_festivity">Festivity / Special greetings</string>
-
-    <string name="are_you_sure_do_you_want_to_logout">Are you sure,Do you want to Logout?</string>
-    <string name="gallery">Gallery</string>
-    <string name="camera">Camera</string>
-    <string name="cancel">Cancel</string>
-    <string name="next">NEXT</string>
-    <string name="submit">submit</string>
-    <string name="or_connect_with_social">Or connect with social</string>
-
-    <!--New design-->
-    <string name="login_to_continue">Login to continue</string>
-    <string name="welcome_back">Welcome Back</string>
-
-    <string name="login">Login</string>
-    <string name="orconnect">OR CONNECT</string>
-    <string name="google">Google</string>
-    <string name="facebook">Facebook</string>
-    <string name="mobile">Mobile</string>
-    <string name="already_acc">Already have account</string>
-    <string name="pls_enter_reg">Please Enter Register</string>
-    <string name="email_id">Email Id</string>
-    <string name="letsCreat">Lets Create</string>
-    <string name="a_new_account">New Account</string>
-    <string name="lbl_conf_password">Confirm Password</string>
-    <string name="str_face_book">Facebook</string>
-    <string name="str_google">Google</string>
-    <string name="str_sign_up">Sign Up</string>
-    <string name="lbl_first_name">Firstname</string>
-    <string name="lbl_last_name">Lastname</string>
-    <string name="lbl_phone_number">Phone Number</string>
-    <string name="lbl_retype_password">Confirm Password</string>
     <string name="select_staff_member">Select Staff Member</string>
     <string name="save_time_with_us">Save Your Time With Us</string>
     <string name="book_from_anywhere">Book From Anywhere</string>
@@ -145,11 +224,63 @@
     <string name="str_get_service_at_home">Get Service at home</string>
     <string name="staff_member_name">Staff Member Name :</string>
     <string name="str_jack">Jack</string>
-    <string name="user_name">User Name</string>
-    <string name="forgot">Forgot Password?</string>
-    <string name="dont_have_acc">Dont have an account ?</string>
-    <string name="lbl_email">Email</string>
-    <string name="lbl_password">Password</string>
-    <string name="kmaway">km away</string>
+
+    <string name="str_used_service">Used Service :</string>
+
+    <string name="str_pay">Pay</string>
+    <string name="str_select_staff_member">Select Staff Member</string>
+    <string name="str_staff_member_name">Staff Member Name :</string>
+    <string name="jack">Jack</string>
+    <string name="str_booking_time_slot">Booking Time Slot :</string>
+    <string name="_02_00_to_04_00">02:00 to 04:00</string>
+    <string name="used_service">Used Service :</string>
+    <string name="str_booking_amount">Booking Amount :</string>
+    <string name="str_rs_1500">Rs. 1500</string>
+    <string name="str_add_review">Add Review</string>
+    <string name="str_the_home_saloon">The Home Saloon</string>
+    <string name="str_hurry">Hurry</string>
+    <string name="str_rs">RS</string>
+    <string name="any">Any</string>
+    <string name="str_login_cancel">Login Cancel</string>
+    <string name="str_drop_location">Drop Location</string>
+    <string name="pls_sel_date">Please Select Date</string>
+    <string name="pls_wait">Please wait...</string>
+    <string name="done">Done</string>
+    <string name="services">Services</string>
+    <string name="address">Type Your Address Here</string>
+
+
+
+
+    <!--New design-->
+    <string name="login_to_continue">Login to continue</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="username">UsesName</string>
+    <string name="password">Password</string>
+
+    <string name="login">Login</string>
+    <string name="orconnect">Or Connect</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="mobile">Mobile</string>
+    <string name="already_acc">Already have account</string>
+    <string name="pls_enter_reg">Please Enter Register</string>
+    <string name="email_id">Email Id</string>
+    <string name="letsCreat">Lets Create</string>
+    <string name="a_new_account">New Account</string>
+    <string name="check_connection">Check your network connection</string>
+    <string name="please_wait"><![CDATA[Please wait&#8230;]]></string>
+
+    <string name="dont_have_account">Don\'t have an account ?</string>
+    <string name="forgot_pass">Forgot Password ?</string>
+    <string name="signin">Sign in</string>
+
+    <string name="sign_up">Sign up</string>
+    <string name="link">wwww.beautyapp.com</string>
+    <string name="reset_pass">Reset Your Password</string>
+    <string name="select_location">Select My Location</string>
+    <string name="search_location">Search Location</string>
+    <string name="we_sent_code">We have sent a four digit code on your email.</string>
     <string name="no_result_found">No Result found</string>
+    <string name="next">Next</string>
 </resources>

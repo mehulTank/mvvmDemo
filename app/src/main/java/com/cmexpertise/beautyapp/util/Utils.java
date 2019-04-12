@@ -78,7 +78,7 @@ public class Utils {
                     dialog.dismiss();
                 }
             });
-            dialog.show();
+            //dialog.show();
 
             return false;
         }
@@ -543,5 +543,11 @@ public class Utils {
     public static void setSystemLocale(Configuration config, Locale locale) {
         config.setLocale(locale);
     }
+
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
 
 }
