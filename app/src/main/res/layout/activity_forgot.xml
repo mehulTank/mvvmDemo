@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="forgotViewModel"
+            type="com.cmexpertise.beautyapp.mvvm.forgot.ForgotViewModel" />
+    </data>
+
+<LinearLayout
+    android:id="@+id/activity_llMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/ic_login_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:gravity="start"
+        android:orientation="vertical">
+
+
+        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pls_enter_reg"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/_21sdp"
+            android:textStyle="italic"
+            app:font_name="RobotoThinItalic.ttf" />
+
+
+        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_id"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/_24sdp"
+            app:font_name="RobotoThinItalic.ttf" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical">
+
+            <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                android:id="@+id/activity_forgotPass_etEmail"
+                style="@style/editTextStyle_ganaral"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:hint="@string/lbl_email"
+                android:inputType="text"
+
+                app:font_name="RobotoLight.ttf" />
+
+            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                android:id="@+id/activity_forgotPass_tvsubmit"
+                style="@style/textStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:background="@drawable/backgound_button"
+                android:text="@string/submit"
+                android:onClick="@{forgotViewModel::onClickForgot}"
+                android:textAllCaps="true"
+                app:font_name="RobotoMedium.ttf" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+        android:id="@+id/activity_forgotPass_tvLogin"
+        style="@style/textStyle"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="end"
+        android:onClick="@{forgotViewModel::onClickLogin}"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/backgound_button_signup"
+        android:text="@string/login"
+        app:font_name="RobotoMedium.ttf" />
+
+
+</LinearLayout>
+</layout>
