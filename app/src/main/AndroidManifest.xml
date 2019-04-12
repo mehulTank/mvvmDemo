@@ -132,6 +132,21 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
+        <activity
+            android:name="com.cmexpertise.beautyapp.Activity.SelectLocationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+
+        <activity
+            android:name="com.cmexpertise.beautyapp.Activity.SelectCategoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
 
     </application>
 
