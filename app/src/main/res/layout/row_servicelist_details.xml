@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivNext"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_service_next" />
+
+            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                android:id="@+id/row_service_tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivNext"
+                android:paddingStart="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:font_name="RobotoRegular.ttf" />
+
+
+            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                android:id="@+id/row_service_tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:font_name="RobotoRegular.ttf" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

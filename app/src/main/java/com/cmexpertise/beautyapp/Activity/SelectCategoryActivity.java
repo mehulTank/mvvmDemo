@@ -1,5 +1,6 @@
 package com.cmexpertise.beautyapp.Activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,8 +34,6 @@ import java.util.List;
 public class SelectCategoryActivity extends AppCompatActivity implements CategoryNavigator, View.OnClickListener {
 
 
-    private List<Categories> list = new ArrayList<Categories>();
-    private List<CategoryResponse> selectedCategoryResponseList;
     private List<CategoryResponse> currentSelectedItems = new ArrayList<>();
     private CategoriesAdapter categoriesAdapter;
     private int MAX_CLICK_INTERVAL = 1500;
@@ -63,6 +62,8 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
         binding.ivBack.setOnClickListener(this);
 
 
+        categoriesAdapter = new CategoriesAdapter(SelectCategoryActivity.this, currentSelectedItems, SelectCategoryActivity.this);
+        binding.activitySelectCategoryRvCategory.setAdapter(categoriesAdapter);
         getData();
 
 
@@ -79,11 +80,11 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
 
         } else {
             if ((!Preferences.readString(this, Preferences.SELECTED_CATEGORIES_ID, "").equals(""))) {
-//                Intent intent = new Intent(this, MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//                SelectCategoryActivity.this.finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                SelectCategoryActivity.this.finish();
             } else {
                 getCategoryList();
             }
@@ -93,7 +94,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
 
     private void getCategoryList() {
 
-        if (Utils.isOnline(SelectCategoryActivity.this, true)) {
+        if (!Utils.isOnline(SelectCategoryActivity.this, true)) {
             showErrorWithInternet();
         } else {
 
@@ -143,12 +144,11 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
                         strSelectedID += c.getId() + ",";
                     }
                     Preferences.writeString(SelectCategoryActivity.this, Preferences.SELECTED_CATEGORIES_ID, (strSelectedID.substring(0, (strSelectedID.length() - 1))));
-
-//                    Intent intent = new Intent(SelectCategoryActivity.this, MainActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
+                    Intent intent = new Intent(SelectCategoryActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
 
 
                 } else {
@@ -178,18 +178,19 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
 
         skeletonScreen.hide();
 
-        if (Integer.parseInt(responseBase.getResponsedata().getSuccess()) == 1) {
+        if (responseBase.getResponsedata().getSuccess().equalsIgnoreCase("1")) {
             if (responseBase.getResponsedata().getData().size() > 0) {
+                ArrayList<CategoryResponse> categoryResponses = (ArrayList<CategoryResponse>) responseBase.getResponsedata().getData();
+                currentSelectedItems.addAll(categoryResponses);
+
+
                 if (!Preferences.readString(this, Preferences.SELECTED_CATEGORIES_ID, "").equals("")) {
                     String strSelected[] = Preferences.readString(this, Preferences.SELECTED_CATEGORIES_ID, "").split(",");
-                    selectedCategoryResponseList = new ArrayList<CategoryResponse>();
-                    selectedCategoryResponseList.addAll(responseBase.getResponsedata().getData());
-                    selectedData(strSelected, responseBase);
-                    setUpItemClickListner();
-                    binding.activitySelectCategoryRvCategory.setAdapter(categoriesAdapter);
+                    selectedData(strSelected, currentSelectedItems);
+
                 } else {
-                    setUpItemClickListner();
-                    binding.activitySelectCategoryRvCategory.setAdapter(categoriesAdapter);
+                    categoriesAdapter.addAll(currentSelectedItems);
+
                 }
             } else {
                 skeletonScreen = Skeleton.bind(binding.activitySelectCategoryRvCategory)
@@ -204,43 +205,28 @@ public class SelectCategoryActivity extends AppCompatActivity implements Categor
 
     }
 
-    private void setUpItemClickListner() {
 
-        categoriesAdapter = new CategoriesAdapter(SelectCategoryActivity.this, selectedCategoryResponseList, new CategoriesAdapter.OnItemCheckListener() {
-            @Override
-            public void onItemCheck(CategoryResponse item) {
-
-                if (!currentSelectedItems.contains(item)) {
-                    currentSelectedItems.add(item);
-                }
-
-            }
-
-            @Override
-            public void onItemUncheck(CategoryResponse item) {
-                if (currentSelectedItems.contains(item)) {
-                    currentSelectedItems.remove(item);
-                }
-            }
-        });
-
-    }
-
-    private void selectedData(String[] strSelected, CategoryResponseData responseBase) {
+    private void selectedData(String[] strSelected, List<CategoryResponse> responseBase) {
         for (int i = 0; i < strSelected.length; i++) {
-            for (int j = 0; j < responseBase.getResponsedata().getData().size(); j++) {
-                if (Integer.parseInt(responseBase.getResponsedata().getData().get(j).getId()) == Integer.parseInt(strSelected[i])) {
-                    CategoryResponse categoryResponse = responseBase.getResponsedata().getData().get(j);
-                    categoryResponse.setIsChecked("true");
+            for (int j = 0; j < responseBase.size(); j++) {
+                if (Integer.parseInt(responseBase.get(j).getId()) == Integer.parseInt(strSelected[i])) {
+                    currentSelectedItems.get(j).setIsChecked("true");
 
-                    if (!currentSelectedItems.contains(categoryResponse)) {
-                        currentSelectedItems.add(categoryResponse);
-                    }
-                    break;
                 }
             }
         }
 
+        categoriesAdapter.addAll(currentSelectedItems);
 
+
+    }
+
+
+    public void checkedListner(boolean isChecked, int position) {
+
+        if (currentSelectedItems != null && currentSelectedItems.size() > 0) {
+            currentSelectedItems.get(position).setIsChecked(isChecked ? "true" : "false");
+            //categoriesAdapter.addAll(currentSelectedItems);
+        }
     }
 }

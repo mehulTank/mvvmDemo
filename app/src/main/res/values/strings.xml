@@ -62,8 +62,10 @@
     <string name="delete">Delete</string>
     <string name="menu_review">Review</string>
     <string name="menu_booking">Booking</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_gallery">GALLERY</string>
     <string name="menu_info">Info</string>
+    <string name="menu_details">DETAIL</string>
+    <string name="menu_offers">OFFER</string>
     <string name="rate_us">Rate Us</string>
     <string name="skip">Skip</string>
     <string name="fb_app_id">658017587735861</string>

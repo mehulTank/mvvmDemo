@@ -8,13 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.RowStorelistBinding;
 import com.cmexpertise.beautyapp.fragment.StoreListFragment;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponse;
-import com.bumptech.glide.Glide;
 import com.cmexpertise.beautyapp.util.Constans;
 
 import java.text.DecimalFormat;
@@ -38,7 +37,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.productModelList = items;
         this.productListFragment = productListFragment;
         this.mContext = context;
-        df = new DecimalFormat("#.00");
+        df = new DecimalFormat("#.0");
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -115,9 +114,16 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bindData(StoreResponse item, int position) {
 
-
+            itemView.setTag(item);
             rowProductlistBinding.fragmentStoreRowTxtStoreName.setText("" + item.getName());
-            rowProductlistBinding.fragmentStoreRowTxtAvgRating.setText(String.valueOf(item.getAvgRate()));
+            Glide.with(mContext).load(item.getImage()).placeholder(R.drawable.ic_placeholder).centerCrop().into(rowProductlistBinding.rowStoreIvStore);
+
+            if (item.getAvgRate() != null) {
+                rowProductlistBinding.fragmentStoreRowTxtStoreRbStore.setRating(Float.parseFloat(item.getAvgRate()));
+            } else {
+                rowProductlistBinding.fragmentStoreRowTxtStoreRbStore.setRating(0);
+            }
+
             rowProductlistBinding.fragmentStoreRowTxtStoreDistance.setText(String.valueOf(item.getAvgRate()));
             rowProductlistBinding.fragmentStoreRowTxtStoreName.setTag(item);
 
@@ -131,9 +137,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 e.printStackTrace();
             }
 
-            if (item.getImage() != null && !item.getImage().isEmpty()) {
-                Glide.with(mContext).load(item.getImage()).placeholder(R.drawable.ic_placeholder).centerCrop().into(rowProductlistBinding.rowStoreIvStore);
-            }
+
 
         }
     }
@@ -158,7 +162,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Location locationB = new Location("point B");
         locationB.setLatitude(lat2);
         locationB.setLongitude(lon2);
-        return (locationA.distanceTo(locationB)/1000 );
+        return (locationA.distanceTo(locationB) / 1000);
 
     }
 }

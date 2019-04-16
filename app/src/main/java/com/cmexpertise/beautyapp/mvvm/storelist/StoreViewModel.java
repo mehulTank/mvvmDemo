@@ -56,6 +56,31 @@ public class StoreViewModel extends Observable {
         compositeDisposable.add(disposable);
     }
 
+    public void getStoreListLatlng(final String categoryId, final String lat,final String lng, final String offset) {
+
+        BeautyApplication appController = BeautyApplication.getmInstance();
+        UsersService usersService = appController.getUserService();
+
+
+        Disposable disposable = usersService.doGetLocationWithLatLng(categoryId, lat,lng, offset)
+                .subscribeOn(appController.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<StoreResponseData>() {
+                    @Override
+                    public void accept(StoreResponseData userResponse) throws Exception {
+                        storeListNavigator.storeResponce(userResponse);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        storeListNavigator.handleError(throwable);
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
 
     private void unSubscribeFromObservable() {
         if (compositeDisposable != null && !compositeDisposable.isDisposed()) {

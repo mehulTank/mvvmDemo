@@ -243,7 +243,10 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
 
         Utils.hideProgressDialog(this, progress);
 
-        if (responseBase != null && responseBase.getResponsedata() != null && responseBase.getResponsedata().getSuccess() == 1) {
+        if (responseBase != null && responseBase.getResponsedata() != null && responseBase.getResponsedata().getSuccess() == 1)
+        {
+
+            BeautyApplication.getmInstance().savePreferenceDataBoolean(getString(R.string.preferances_islogin), true);
 
 
             Intent intent = new Intent(LoginActivity.this, SelectLocationActivity.class);

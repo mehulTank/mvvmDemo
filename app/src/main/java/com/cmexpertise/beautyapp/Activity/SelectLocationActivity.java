@@ -155,7 +155,7 @@ public class SelectLocationActivity extends BaseActivity implements LocationNavi
 
     private void getCityList() {
 
-        if (Utils.isOnline(SelectLocationActivity.this, true)) {
+        if (!Utils.isOnline(SelectLocationActivity.this, true)) {
             showErrorWithInternet();
         } else {
 
@@ -266,7 +266,7 @@ public class SelectLocationActivity extends BaseActivity implements LocationNavi
 
     private void locationSelection(LocationResponse locationResponse) {
 
-        if (Utils.isOnline(SelectLocationActivity.this, true)) {
+        if (!Utils.isOnline(SelectLocationActivity.this, true)) {
             showErrorWithInternet();
         } else {
 
@@ -302,12 +302,12 @@ public class SelectLocationActivity extends BaseActivity implements LocationNavi
 
                                 if (fromSetting != null) {
                                     fromSetting = null;
-//                                    Preferences.writeBoolean(getApplicationContext(), Preferences.SELECTEDLOCATIONORCITY, false);
-//                                    Intent intent = new Intent(this, MainActivity.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                    startActivity(intent);
-//                                    SelectLocationActivity.this.finish();
+                                    Preferences.writeBoolean(getApplicationContext(), Preferences.SELECTEDLOCATIONORCITY, false);
+                                    Intent intent = new Intent(this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    SelectLocationActivity.this.finish();
                                 } else {
                                     startActivity(new Intent(SelectLocationActivity.this, SelectCategoryActivity.class));
                                     finish();
@@ -410,13 +410,13 @@ public class SelectLocationActivity extends BaseActivity implements LocationNavi
 
 
             if (fromSetting != null) {
-//                fromSetting = null;
-//                Preferences.writeBoolean(getApplicationContext(), Preferences.SELECTEDLOCATIONORCITY, true);
-//                Intent intent = new Intent(SelectLocationActivity.this, MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//                SelectLocationActivity.this.finish();
+                fromSetting = null;
+                Preferences.writeBoolean(getApplicationContext(), Preferences.SELECTEDLOCATIONORCITY, true);
+                Intent intent = new Intent(SelectLocationActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                SelectLocationActivity.this.finish();
             } else {
                 startActivity(new Intent(SelectLocationActivity.this, SelectCategoryActivity.class));
                 finish();

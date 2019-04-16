@@ -1,199 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="loginViewModel"
             type="com.cmexpertise.beautyapp.mvvm.login.LoginViewModel" />
     </data>
 
-<LinearLayout
-    android:id="@+id/activity_llmain"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_login_bg"
-    android:orientation="vertical">
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-            android:id="@+id/activity_login_tvSkip"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:layout_margin="@dimen/_15sdp"
-            android:background="@drawable/ic_close"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/_21sdp"
-            app:font_name="RobotoMedium.ttf" />
-
-    </RelativeLayout>
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
+        android:id="@+id/activity_llmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:background="@drawable/ic_login_bg"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                android:id="@+id/activity_login_tvSkip"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/_15sdp"
+                android:background="@drawable/ic_close"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/_21sdp"
+                app:font_name="RobotoMedium.ttf" />
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:orientation="vertical">
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/welcome_back"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/_21sdp"
-                    android:textStyle="italic"
-                    app:font_name="RobotoThinItalic.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_to_continue"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/_24sdp"
-                    app:font_name="RobotoThinItalic.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
-                    android:id="@+id/activity_login_etUserName"
-                    style="@style/editTextStyle_ganaral"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:hint="@string/user_name"
-                    android:inputType="text"
-                    app:font_name="RobotoLight.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
-                    android:id="@+id/activity_login_etPassword"
-                    style="@style/editTextStyle_ganaral"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    app:font_name="RobotoLight.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    android:id="@+id/activity_login_tvForgot"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/forgot"
-                    android:onClick="@{loginViewModel::onClickForgot}"
-                    app:font_name="RobotoLight.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    android:id="@+id/activity_login_tvLogin"
-                    style="@style/textStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/backgound_button"
-                    android:text="@string/login"
-                    android:onClick="@{loginViewModel::onClickLogin}"
-                    android:textAllCaps="true"
-                    app:font_name="RobotoMedium.ttf" />
-
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    style="@style/textviewStyle_general"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:text="@string/orconnect"
-                    app:font_name="RobotoMedium.ttf" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+
+                    android:orientation="vertical">
 
 
-                    <LinearLayout
-                        android:id="@+id/activity_login_llGoogle"
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/welcome_back"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/_21sdp"
+                        android:textStyle="italic"
+                        app:font_name="RobotoThinItalic.ttf" />
+
+
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_to_continue"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/_24sdp"
+                        app:font_name="RobotoThinItalic.ttf" />
+
+
+                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                        android:id="@+id/activity_login_etUserName"
+                        style="@style/editTextStyle_ganaral"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:hint="@string/user_name"
+                        android:inputType="text"
+                        app:font_name="RobotoLight.ttf" />
+
+
+                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                        android:id="@+id/activity_login_etPassword"
+                        style="@style/editTextStyle_ganaral"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        app:font_name="RobotoLight.ttf" />
+
+
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        android:id="@+id/activity_login_tvForgot"
+                        style="@style/textStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:onClick="@{loginViewModel::onClickForgot}"
+                        android:text="@string/forgot"
+                        app:font_name="RobotoLight.ttf" />
+
+
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        android:id="@+id/activity_login_tvLogin"
+                        style="@style/textStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:onClick="@{loginViewModel::onClickGoogleLogin}"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/backgound_button"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:onClick="@{loginViewModel::onClickLogin}"
+                        android:text="@string/login"
+                        android:textAllCaps="true"
+                        app:font_name="RobotoMedium.ttf" />
 
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_gmail" />
-
-
-                        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                            android:id="@+id/activity_login_tvGoogle"
-                            style="@style/textStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:text="@string/google"
-                            app:font_name="RobotoMedium.ttf" />
-
-
-                    </LinearLayout>
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        style="@style/textviewStyle_general"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="@string/orconnect"
+                        app:font_name="RobotoMedium.ttf" />
 
 
                     <LinearLayout
-                        android:id="@+id/activity_login_llFb"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_weight="1"
-                        android:onClick="@{loginViewModel::onClickFbLogin}"
-                        android:background="@drawable/backgound_button_facebook"
-                        android:gravity="center"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
                         android:orientation="horizontal">
 
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/facebook" />
+                        <LinearLayout
+                            android:id="@+id/activity_login_llGoogle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/backgound_button"
+                            android:gravity="center"
+                            android:onClick="@{loginViewModel::onClickGoogleLogin}"
+                            android:orientation="horizontal">
 
 
-                        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                            android:id="@+id/activity_login_tvFacebook"
-                            style="@style/textStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/_8sdp"
-                            android:text="@string/facebook"
-                            app:font_name="RobotoMedium.ttf" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_gmail" />
+
+
+                            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                                android:id="@+id/activity_login_tvGoogle"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:text="@string/google"
+                                app:font_name="RobotoMedium.ttf" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/activity_login_llFb"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/backgound_button_facebook"
+                            android:gravity="center"
+                            android:onClick="@{loginViewModel::onClickFbLogin}"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/facebook" />
+
+
+                            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                                android:id="@+id/activity_login_tvFacebook"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_8sdp"
+                                android:text="@string/facebook"
+                                app:font_name="RobotoMedium.ttf" />
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -202,46 +204,39 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:orientation="horizontal">
 
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        style="@style/textviewStyle_general"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/dont_have_acc"
+                        app:font_name="RobotoMedium.ttf" />
 
-            </LinearLayout>
+                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        android:id="@+id/activity_login_tvRegister"
+                        style="@style/textStyle"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:background="@drawable/backgound_button_signup"
+                        android:onClick="@{loginViewModel::onClickRegister}"
+                        android:text="@string/str_sign_up"
+                        app:font_name="RobotoMedium.ttf" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:orientation="horizontal">
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    style="@style/textviewStyle_general"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/dont_have_acc"
-                    app:font_name="RobotoMedium.ttf" />
-
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
-                    android:id="@+id/activity_login_tvRegister"
-                    style="@style/textStyle"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:onClick="@{loginViewModel::onClickRegister}"
-                    android:background="@drawable/backgound_button_signup"
-                    android:text="@string/str_sign_up"
-                    app:font_name="RobotoMedium.ttf" />
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
 
 
-
-
-    </android.support.v4.widget.NestedScrollView>
-
-
-</LinearLayout>
+    </LinearLayout>
 </layout>

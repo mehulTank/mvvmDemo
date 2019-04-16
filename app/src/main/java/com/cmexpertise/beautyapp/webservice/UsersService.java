@@ -7,11 +7,14 @@ import com.cmexpertise.beautyapp.model.categoryModel.CategoryResponseData;
 import com.cmexpertise.beautyapp.model.locationModel.LocationResponseData;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponseData;
+import com.cmexpertise.beautyapp.model.storeServicemodel.ServicesList;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Kailash Patel
@@ -25,6 +28,13 @@ public interface UsersService
     Observable<StoreResponseData> doGetLocation(@Field("category_id") String category_id,
                                                 @Field("location_id") String location_id,
                                                 @Field("offset") String offset);
+
+    @FormUrlEncoded
+    @POST("store_list")
+    Observable<StoreResponseData> doGetLocationWithLatLng(@Field("category_id") String category_id,
+                                                             @Field("latitude") String latitude,
+                                                             @Field("longitude") String longitude,
+                                                             @Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("user_login")
@@ -59,4 +69,7 @@ public interface UsersService
 
     @POST("category_list")
     Observable<CategoryResponseData> doGetCategoryList();
+
+    @GET("store_service_list")
+    Observable<ServicesList> getServiceList(@Query("store_id") String storeId);
 }

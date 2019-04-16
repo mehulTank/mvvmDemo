@@ -46,6 +46,27 @@ public class Utils {
     public static final int MEDIA_TYPE_FILE = 2;
 
 
+    public static final String INTENT_SERVICES = "INTENT_SERVICES";
+    public static final String INTENT_OFFER_ID = "INTENT_OFFER_ID";
+    public static final String INTENT_OFFER_TOTAL_AMT = "INTENT_OFFER_TOTAL_AMT";
+    public static final String INTENT_STORE_DETAILS = "INTENT_STORE_DETAILS";
+    public static final String INTENT_BOOKING_LIST_DETAIL = "INTENT_BOOKING_LIST_DETAIL";
+    public static final String INTENT_STORE_SUB_INDEX = "INTENT_STORE_SUB_INDEX";
+    public static final String INTENT_STORE_STUFF_SELECTED_ID = "INTENT_STORE_STUFF_SELECTED_ID";
+    public static final String INTENT_FROM_SETTING = "INTENT_FROM_SETTING";
+    public static final String INTENT_IMAGE_LIST = "INTENT_IMAGE_LIST";
+    public static final String INTENT_SELECTED_GALLERY_IMAGE_INDEX = "INTENT_SELECTED_GALLERY_IMAGE_INDEX";
+
+    public static final String VERSION_CHECK = "version_check";
+
+
+    public static final String CITY_LIST = "city_list";
+    public static final String CATEGORY_LIST = "list_categories";
+    public static final String INTENT_STORE_ID = "INTENT_STORE_ID";
+    public static final String INTENT_STORE = "INTENT_STORE";
+
+
+
     /**
      * @param context
      * @param message

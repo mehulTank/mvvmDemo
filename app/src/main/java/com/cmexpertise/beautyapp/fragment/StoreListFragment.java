@@ -1,26 +1,18 @@
 package com.cmexpertise.beautyapp.fragment;
 
-import android.animation.LayoutTransition;
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 
+import com.cmexpertise.beautyapp.Activity.MainActivity;
+import com.cmexpertise.beautyapp.Activity.StoreDetailsActivity;
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.adapter.StoreListAdapter;
@@ -29,9 +21,11 @@ import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponse;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponseData;
 import com.cmexpertise.beautyapp.mvvm.storelist.StoreListNavigator;
 import com.cmexpertise.beautyapp.mvvm.storelist.StoreViewModel;
+import com.cmexpertise.beautyapp.util.Preferences;
 import com.cmexpertise.beautyapp.util.Utils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
@@ -40,12 +34,6 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
 
     //Declaration
-    
-    private SearchView searchView;
-    private String searchKeyWord = "";
-    private boolean isFromSearch = false;
-    private boolean isDataLoadingFromServer = false;
-
 
     private ArrayList<StoreResponse> modelArrayList = new ArrayList<>();
     private StoreListAdapter productListAdapter;
@@ -58,11 +46,15 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
     private int pageItemCount = 0;
     private int pageIndex = 0;
     private Activity activity;
-
+    private MaterialSearchView searchView;
 
     private StoreListNavigator storeListNavigator;
     private StoreViewModel storeViewModel;
-    private FragmentProductlistBinding fragmentProductlistBinding;
+    private FragmentProductlistBinding binding;
+
+    private String lat;
+    private String lng;
+    private String categoryId;
 
 
     private View rootView;
@@ -71,10 +63,9 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragmentProductlistBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_productlist, container, false);
-        rootView = fragmentProductlistBinding.getRoot();
-        activity= BeautyApplication.getmInstance().getActivity();
-        initToolbar();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_productlist, container, false);
+        rootView = binding.getRoot();
+        activity = BeautyApplication.getmInstance().getActivity();
         initComponents(rootView);
         setHasOptionsMenu(true);
         return rootView;
@@ -82,62 +73,62 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
 
     @Override
-    public void initComponents(View rootView)
-    {
+    public void initComponents(View rootView) {
 
-        storeListNavigator=this;
-        storeViewModel = new StoreViewModel(activity,storeListNavigator);
-        fragmentProductlistBinding.setStoreViewModel(storeViewModel);
-        fragmentProductlistBinding.fragmentProductlistRvProductList.setHasFixedSize(true);
+        storeListNavigator = this;
+        storeViewModel = new StoreViewModel(activity, storeListNavigator);
+        binding.setStoreViewModel(storeViewModel);
+        binding.fragmentProductlistRvProductList.setHasFixedSize(true);
 
+
+        lat = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LATITUDE, "");
+        lng = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LONGITUDE, "");
+        categoryId = Preferences.readString(getActivity(), Preferences.SELECTED_CATEGORIES_ID, "");
+        searchView = (MaterialSearchView) getActivity().findViewById(R.id.search_view);
 
         setUpAdapater(modelArrayList);
         setUpSkelotView();
-
+        setUpSearch();
 
     }
 
     private void setUpSkelotView() {
 
 
-        if (Utils.isOnline(activity, true)) {
+        skeletonScreen = Skeleton.bind(binding.fragmentProductlistRvProductList)
+                .adapter(productListAdapter)
+                .load(R.layout.row_loading_skeleton)
+                .shimmer(false)
+                .show();
 
-            skeletonScreen = Skeleton.bind(fragmentProductlistBinding.fragmentProductlistRvProductList)
-                    .adapter(productListAdapter)
-                    .load(R.layout.row_loading_skeleton)
-                    .shimmer(false)
-                    .show();
-
-            getProductListData(false);
-
-        } else {
-            skeletonScreen = Skeleton.bind(fragmentProductlistBinding.fragmentProductlistRvProductList)
-                    .load(R.layout.nointernet_skeleton)
-                    .shimmer(false)
-                    .show();
-
-        }
+        getProductListData(false);
 
 
     }
 
-
-    public void initToolbar() {
-      //  ((MenuBarActivity) activity).setUpToolbar(getString(R.string.menu_product), false);
-
-    }
 
     public void getProductListData(final boolean isLoadmore) {
 
         if (Utils.isOnline(activity, true)) {
 
-            isDataLoadingFromServer = true;
-            fragmentProductlistBinding.fragmentProductlistLlLoadMoreProgress.setVisibility(isLoadmore ? View.VISIBLE : View.GONE);
-            storeViewModel.getStoreList("19,2,4,5", "1", "" + pageIndex);
+            binding.fragmentProductlistLlLoadMoreProgress.setVisibility(isLoadmore ? View.VISIBLE : View.GONE);
+
+
+            if (Preferences.readBoolean(getActivity(), Preferences.SELECTEDLOCATIONORCITY, false)) {
+
+                storeViewModel.getStoreListLatlng(categoryId, lat, lng, "" + pageIndex);
+
+            } else {
+
+                storeViewModel.getStoreList(categoryId,  Preferences.readString(getActivity(), Preferences.SELECTED_LOCATION_ID, ""),"" + pageIndex);
+
+            }
+
 
         } else {
-            skeletonScreen = Skeleton.bind(fragmentProductlistBinding.fragmentProductlistRvProductList)
+            skeletonScreen = Skeleton.bind(binding.fragmentProductlistRvProductList)
                     .load(R.layout.nointernet_skeleton)
+                    .adapter(productListAdapter)
                     .shimmer(false)
                     .show();
 
@@ -147,10 +138,6 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
     @Override
     public void onItemClick(View view, StoreResponse viewModel) {
 
-        /**
-         * Logic to Prevent the Launch of the Fragment Twice if User makes
-         * the Tap(Click) very Fast.
-         */
         if (SystemClock.elapsedRealtime() - mLastClickTime < MAX_CLICK_INTERVAL) {
             return;
         }
@@ -158,102 +145,18 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
         Utils.hideKeyboard(activity);
 
-    }
+        Intent intentStoreDetailsActivity = new Intent(getActivity(), StoreDetailsActivity.class);
+        intentStoreDetailsActivity.putExtra(Utils.INTENT_STORE_DETAILS, viewModel);
+        startActivity(intentStoreDetailsActivity);
 
-    /**
-     * Option menu for Searchview
-     *
-     * @param menu
-     * @param inflater
-     */
-
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.menu_search, menu);
-        final MenuItem menuItem = menu.findItem(R.id.menu_search);
-
-
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        //searchView.setQueryHint(getString(R.string.actionbar_search_hint));
-        searchView.setGravity(Gravity.END);
-        final LinearLayout searchBar = (LinearLayout) searchView.findViewById(R.id.search_bar);
-        LayoutTransition layoutTransition = new LayoutTransition();
-        layoutTransition.setStartDelay(LayoutTransition.APPEARING, 100);
-        searchBar.setLayoutTransition(layoutTransition);
-
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                searchKeyWord = "";
-                return true;
-            }
-        });
-
-
-        MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                searchKeyWord = "";
-                isFromSearch = false;
-
-                if (Utils.isNetworkAvailable(activity)) {
-                    modelArrayList.clear();
-                    pageIndex = 0;
-                    getProductListData(false);
-                } else {
-                    Utils.snackbar(fragmentProductlistBinding.fragmentProductlistLlContainer, "" + getString(R.string.check_connection), true, activity);
-                }
-
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                // Do something when expanded
-                return true;  // Return true to expand action view
-            }
-
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-
-                if (!isDataLoadingFromServer) {
-                    isFromSearch = true;
-                    searchKeyWord = query;
-
-                    //Clear list data before search
-                    pageIndex = 0;
-                    modelArrayList.clear();
-                    getProductListData(false);
-                    return false;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        if (isFromSearch) {
-            menuItem.expandActionView();
-            if (!TextUtils.isEmpty(searchKeyWord))
-                searchView.setQuery(searchKeyWord, false);
-        }
 
     }
 
 
     private void emptyView() {
 
-        skeletonScreen = Skeleton.bind(fragmentProductlistBinding.fragmentProductlistRvProductList)
+        skeletonScreen = Skeleton.bind(binding.fragmentProductlistRvProductList)
+                .adapter(productListAdapter)
                 .load(R.layout.empty_skeleton)
                 .shimmer(false)
                 .show();
@@ -263,16 +166,16 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
     private void setUpAdapater(final ArrayList<StoreResponse> guidelineModelArrayList) {
 
 
-        fragmentProductlistBinding.fragmentProductlistRvProductList.removeAllViews();
-        fragmentProductlistBinding.fragmentProductlistRvProductList.setHasFixedSize(true);
-        final GridLayoutManager mLayoutManager = new GridLayoutManager(activity, 2);
-        fragmentProductlistBinding.fragmentProductlistRvProductList.setLayoutManager(mLayoutManager);
+        binding.fragmentProductlistRvProductList.removeAllViews();
+        binding.fragmentProductlistRvProductList.setHasFixedSize(true);
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(activity);
+        binding.fragmentProductlistRvProductList.setLayoutManager(mLayoutManager);
 
         productListAdapter = new StoreListAdapter(StoreListFragment.this, activity, guidelineModelArrayList);
         productListAdapter.setOnItemClickListener(this);
-        fragmentProductlistBinding.fragmentProductlistRvProductList.setAdapter(productListAdapter);
+        binding.fragmentProductlistRvProductList.setAdapter(productListAdapter);
 
-        fragmentProductlistBinding.fragmentProductlistRvProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.fragmentProductlistRvProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -313,62 +216,34 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
         super.onHiddenChanged(hidden);
         if (!hidden) {
             setHasOptionsMenu(true);
-            initToolbar();
 
         }
-    }
-
-
-    private void hideKeyBoard() {
-        if (searchView != null) {
-            searchView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-                }
-
-            }, 300);
-        }
-
-
     }
 
 
     @Override
     public void handleError(Throwable throwable) {
-        Utils.snackbar(fragmentProductlistBinding.fragmentProductlistLlContainer, "" + throwable.getMessage(), true, activity);
+        emptyView();
+        Utils.snackbar(binding.fragmentProductlistLlContainer, "" + throwable.getMessage(), true, activity);
     }
 
     @Override
     public void storeResponce(StoreResponseData userResponse) {
 
-        isDataLoadingFromServer = false;
         skeletonScreen.hide();
-
-        if (searchView != null) {
-            hideKeyBoard();
-        }
-
 
         if (userResponse.getResponsedata().getSuccess().equalsIgnoreCase("1")) {
 
             ArrayList<StoreResponse> productModelArrayList = (ArrayList<StoreResponse>) userResponse.getResponsedata().getData();
             pageItemCount = userResponse.getResponsedata().getCount();
             productListAdapter.setLoaded();
-            fragmentProductlistBinding.fragmentProductlistLlLoadMoreProgress.setVisibility(View.GONE);
+            binding.fragmentProductlistLlLoadMoreProgress.setVisibility(View.GONE);
 
-            if (productModelArrayList != null && productModelArrayList.size() > 0) {
-
-                if (productListAdapter != null) {
-                    modelArrayList.addAll(productModelArrayList);
-                    productListAdapter.addRecord(modelArrayList);
-                    productListAdapter.notifyDataSetChanged();
-
-                } else {
-                    modelArrayList.addAll(productModelArrayList);
-                    setUpAdapater(modelArrayList);
-                }
+            if (productModelArrayList != null && productModelArrayList.size() > 0)
+            {
+                modelArrayList.addAll(productModelArrayList);
+                productListAdapter.addRecord(modelArrayList);
+                productListAdapter.notifyDataSetChanged();
 
 
             } else {
@@ -381,7 +256,23 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
             emptyView();
         }
+    }
 
+    private void setUpSearch() {
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //  ((MainActivity) getActivity()).changeFragment(new SearchFragment(), true);
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                ((MainActivity) getActivity()).changeFragment(new StoreListFragment(), true);
+            }
+        });
 
     }
+
 }

@@ -71,6 +71,13 @@ public class SplashActivity extends AppCompatActivity {
             } else {
                 if (isLogin) {
 
+                    if (!Preferences.readString(SplashActivity.this, Preferences.USER_ID, "").equals("")) {
+                        Intent intent = new Intent(SplashActivity.this, SelectLocationActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        SplashActivity.this.finish();
+                    }
 
 
                 } else {
