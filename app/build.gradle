@@ -95,6 +95,9 @@ dependencies
             implementation 'com.ethanhua:skeleton:1.1.2'
             implementation 'io.supercharge:shimmerlayout:2.1.0'
 
+            //Picaso
+            implementation 'com.squareup.picasso:picasso:2.4.0'
+
 
 
 

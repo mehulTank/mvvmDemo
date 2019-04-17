@@ -10,10 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +20,7 @@ import android.view.View;
 
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.ActivityStoreDetailBinding;
+import com.cmexpertise.beautyapp.fragment.GalleryListFragment;
 import com.cmexpertise.beautyapp.fragment.InfoFragment;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponse;
 import com.cmexpertise.beautyapp.util.Constans;
@@ -57,14 +56,12 @@ public class StoreDetailsActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_store_detail);
         bundle = getIntent();
 
-        if (bundle != null)
-        {
+        if (bundle != null) {
             storeIntentResponse = bundle.getParcelableExtra(Utils.INTENT_STORE_DETAILS);
         }
 
 
         initComponet();
-
 
 
     }
@@ -86,9 +83,6 @@ public class StoreDetailsActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
 
@@ -105,14 +99,11 @@ public class StoreDetailsActivity extends AppCompatActivity {
     private void setUpData() {
 
 
-        if(storeIntentResponse!=null)
-        {
-            binding.fragmentStoreInfoTxtStoreName.setText(""+storeIntentResponse.getName());
-            binding.fragmentStoreInfoTxtStoreAdd.setText(""+storeIntentResponse.getAddress());
+        if (storeIntentResponse != null) {
+            binding.fragmentStoreInfoTxtStoreName.setText("" + storeIntentResponse.getName());
+            binding.fragmentStoreInfoTxtStoreAdd.setText("" + storeIntentResponse.getAddress());
             binding.fragmentStoreInfoTxtOpnTime.setText(getString(R.string.open_till) + " " + storeIntentResponse.getCloseTime());
             binding.fragmentStoreRowTxtStoreRbStore.setRating(Float.parseFloat(storeIntentResponse.getAvgRate()));
-
-
 
 
             try {
@@ -186,15 +177,20 @@ public class StoreDetailsActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                if(tab.getPosition()==0)
-                {
+                if (tab.getPosition() == 0) {
                     setUpTitle("", true);
                     fragment = new InfoFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(Utils.INTENT_STORE_DETAILS, storeIntentResponse);
-                    fragment.setArguments(bundle);
-                    replaceFragment(fragment);
+
+                } else if (tab.getPosition() == 1) {
+                    setUpTitle(storeIntentResponse.getName(), true);
+                    fragment = new GalleryListFragment();
                 }
+
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Utils.INTENT_STORE_DETAILS, storeIntentResponse);
+                fragment.setArguments(bundle);
+                replaceFragment(fragment);
             }
 
             @Override

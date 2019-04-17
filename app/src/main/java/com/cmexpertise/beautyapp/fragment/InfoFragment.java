@@ -38,7 +38,7 @@ import java.util.List;
 public class InfoFragment extends BaseFragment implements OnMapReadyCallback, ServiceDetailsListNavigator {
 
     private GoogleMap mMap;
-    private StoreResponse storeIntentResponse;
+    private StoreResponse storeResponse;
 
     private Bundle bundle;
     private LinearLayoutManager linearLayoutManager;
@@ -61,8 +61,8 @@ public class InfoFragment extends BaseFragment implements OnMapReadyCallback, Se
 
         if (bundle != null)
         {
-            storeIntentResponse = bundle.getParcelable(Utils.INTENT_STORE_DETAILS);
-            storeId = storeIntentResponse.getId();
+            storeResponse = bundle.getParcelable(Utils.INTENT_STORE_DETAILS);
+            storeId = storeResponse.getId();
         }
 
 
@@ -103,7 +103,7 @@ public class InfoFragment extends BaseFragment implements OnMapReadyCallback, Se
 
     private void ServiceList() {
 
-        storeId = storeIntentResponse.getId();
+        storeId = storeResponse.getId();
 
         skeletonScreen = Skeleton.bind(binding.fragmentStoreInfoLvService)
                 .adapter(servicesAdapter)
@@ -135,21 +135,21 @@ public class InfoFragment extends BaseFragment implements OnMapReadyCallback, Se
         // SupportMapFragment mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
 
 
-        if (storeIntentResponse != null) {
-            String facilityList = storeIntentResponse.getFacility();
+        if (storeResponse != null) {
+            String facilityList = storeResponse.getFacility();
 
             try {
 
                 double distance = distance(Double.parseDouble(Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LATITUDE, "")),
                         Double.parseDouble(Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LONGITUDE, "")),
-                        Double.parseDouble(storeIntentResponse.getLatitude()), Double.parseDouble(storeIntentResponse.getLongitude()));
+                        Double.parseDouble(storeResponse.getLatitude()), Double.parseDouble(storeResponse.getLongitude()));
             } catch (Exception e) {
 
             }
             if ((facilityList == null) || (facilityList.equals(""))) {
 
             } else {
-                String strFacility[] = storeIntentResponse.getFacility().split(",");
+                String strFacility[] = storeResponse.getFacility().split(",");
                 for (int i = 0; i < strFacility.length; i++) {
                     switch (Integer.parseInt(strFacility[i])) {
                         case 1:
@@ -213,7 +213,7 @@ public class InfoFragment extends BaseFragment implements OnMapReadyCallback, Se
             mMap = googleMap;
 
 
-            LatLng sydney = new LatLng(Double.parseDouble(storeIntentResponse.getLatitude() + ""), Double.parseDouble(storeIntentResponse.getLongitude() + ""));
+            LatLng sydney = new LatLng(Double.parseDouble(storeResponse.getLatitude() + ""), Double.parseDouble(storeResponse.getLongitude() + ""));
             mMap.addMarker(new MarkerOptions().position(sydney).title(getString(R.string.str_drop_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));

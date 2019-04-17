@@ -6,6 +6,8 @@ import com.cmexpertise.beautyapp.model.ResponseBase;
 import com.cmexpertise.beautyapp.model.categoryModel.CategoryResponseData;
 import com.cmexpertise.beautyapp.model.locationModel.LocationResponseData;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
+import com.cmexpertise.beautyapp.model.offersmodel.OfferResponseData;
+import com.cmexpertise.beautyapp.model.storeGallrymodel.StoreGalleryResponseData;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponseData;
 import com.cmexpertise.beautyapp.model.storeServicemodel.ServicesList;
 
@@ -72,4 +74,12 @@ public interface UsersService
 
     @GET("store_service_list")
     Observable<ServicesList> getServiceList(@Query("store_id") String storeId);
+
+    @FormUrlEncoded
+    @POST("store_gallery_list")
+    Observable<StoreGalleryResponseData> doGetStroreGalleryImages(@Field("store_id") String store_id, @Field("offset") String offset);
+
+    @GET("offer_list")
+    Observable<OfferResponseData> doGetOffer(@Query("offset") String offset);
+
 }

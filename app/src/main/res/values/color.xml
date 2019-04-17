@@ -101,5 +101,6 @@
     <color name="km_away_color">#898795</color>
     <color name="light_transparent">#16000000</color>
     <color name="dark_transparent">#24000000</color>
+    <color name="bg_offer">#26FF6D86</color>
 
 </resources>

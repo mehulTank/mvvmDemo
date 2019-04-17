@@ -16,7 +16,7 @@ import com.cmexpertise.beautyapp.Activity.StoreDetailsActivity;
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.adapter.StoreListAdapter;
-import com.cmexpertise.beautyapp.databinding.FragmentProductlistBinding;
+import com.cmexpertise.beautyapp.databinding.FragmentStoretlistBinding;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponse;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponseData;
 import com.cmexpertise.beautyapp.mvvm.storelist.StoreListNavigator;
@@ -50,7 +50,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
     private StoreListNavigator storeListNavigator;
     private StoreViewModel storeViewModel;
-    private FragmentProductlistBinding binding;
+    private FragmentStoretlistBinding binding;
 
     private String lat;
     private String lng;
@@ -63,7 +63,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_productlist, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_storetlist, container, false);
         rootView = binding.getRoot();
         activity = BeautyApplication.getmInstance().getActivity();
         initComponents(rootView);
@@ -120,7 +120,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
             } else {
 
-                storeViewModel.getStoreList(categoryId,  Preferences.readString(getActivity(), Preferences.SELECTED_LOCATION_ID, ""),"" + pageIndex);
+                storeViewModel.getStoreList(categoryId, Preferences.readString(getActivity(), Preferences.SELECTED_LOCATION_ID, ""), "" + pageIndex);
 
             }
 
@@ -239,8 +239,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
             productListAdapter.setLoaded();
             binding.fragmentProductlistLlLoadMoreProgress.setVisibility(View.GONE);
 
-            if (productModelArrayList != null && productModelArrayList.size() > 0)
-            {
+            if (productModelArrayList != null && productModelArrayList.size() > 0) {
                 modelArrayList.addAll(productModelArrayList);
                 productListAdapter.addRecord(modelArrayList);
                 productListAdapter.notifyDataSetChanged();
