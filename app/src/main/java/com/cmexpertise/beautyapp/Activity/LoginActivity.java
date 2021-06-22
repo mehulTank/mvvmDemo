@@ -111,6 +111,7 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
 
     @Override
     public void handleError(Throwable throwable) {
+        Utils.hideProgressDialog(this, progress);
         Utils.snackbar(llContainer, "" + throwable.getMessage(), true, LoginActivity.this);
     }
 
@@ -130,6 +131,14 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
             login_type = "0";
             loginViewModel.checkLogin(email, password, login_type);
         }
+    }
+
+    @Override
+    public void skip() {
+
+
+
+
     }
 
     @Override
@@ -247,9 +256,7 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
         {
 
             BeautyApplication.getmInstance().savePreferenceDataBoolean(getString(R.string.preferances_islogin), true);
-
-
-            Intent intent = new Intent(LoginActivity.this, SelectLocationActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -259,20 +266,6 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
     }
 
 
-    private void goToHome() {
-
-
-        if (Build.VERSION.SDK_INT < 23) {
-            openHomeActivity();
-            finish();
-        } else {
-            if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                openHomeActivity();
-            } else {
-                Utils.checkPermitionCameraGaller(LoginActivity.this);
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[],
@@ -410,7 +403,7 @@ public class LoginActivity extends BaseActivity implements LoginNavigator, Googl
                     String email = acct.getEmail();
 
                     progress = Utils.showProgressDialog(LoginActivity.this);
-                    login_type = "2";
+                    login_type = "stra2";
                     loginViewModel.googleLogin(firstName, lastName, email, "", login_type, idToken);
                 }
             }

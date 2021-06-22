@@ -6,13 +6,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cmexpertise.beautyapp.Activity.MainActivity;
-import com.cmexpertise.beautyapp.Activity.StoreDetailsActivity;
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.adapter.StoreListAdapter;
@@ -28,17 +29,19 @@ import com.ethanhua.skeleton.SkeletonScreen;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class StoreListFragment extends BaseFragment implements StoreListAdapter.OnItemClickListener, StoreListNavigator {
+public class StoreListFragment extends BaseFragment implements StoreListAdapter.OnItemClickListener,
+        StoreListNavigator, Observer {
 
 
     //Declaration
 
+    private static int MAX_CLICK_INTERVAL = 1500;
     private ArrayList<StoreResponse> modelArrayList = new ArrayList<>();
     private StoreListAdapter productListAdapter;
-
-    private static int MAX_CLICK_INTERVAL = 1500;
     private long mLastClickTime = 0;
     private int lastVisibleItem;
     private int totalItemCount;
@@ -54,7 +57,6 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
     private String lat;
     private String lng;
-    private String categoryId;
 
 
     private View rootView;
@@ -83,8 +85,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
         lat = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LATITUDE, "");
         lng = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LONGITUDE, "");
-        categoryId = Preferences.readString(getActivity(), Preferences.SELECTED_CATEGORIES_ID, "");
-        searchView = (MaterialSearchView) getActivity().findViewById(R.id.search_view);
+        searchView = getActivity().findViewById(R.id.search_view);
 
         setUpAdapater(modelArrayList);
         setUpSkelotView();
@@ -116,11 +117,13 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
             if (Preferences.readBoolean(getActivity(), Preferences.SELECTEDLOCATIONORCITY, false)) {
 
-                storeViewModel.getStoreListLatlng(categoryId, lat, lng, "" + pageIndex);
+                lat = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LATITUDE, "");
+                lng = Preferences.readString(getActivity(), Preferences.SELECTED_CITY_LONGITUDE, "");
+                storeViewModel.getStoreListLatlng(lat, lng, "" + pageIndex);
 
             } else {
 
-                storeViewModel.getStoreList(categoryId, Preferences.readString(getActivity(), Preferences.SELECTED_LOCATION_ID, ""), "" + pageIndex);
+                storeViewModel.getStoreList("" + 17, "" + pageIndex);
 
             }
 
@@ -144,10 +147,6 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
         mLastClickTime = SystemClock.elapsedRealtime();
 
         Utils.hideKeyboard(activity);
-
-        Intent intentStoreDetailsActivity = new Intent(getActivity(), StoreDetailsActivity.class);
-        intentStoreDetailsActivity.putExtra(Utils.INTENT_STORE_DETAILS, viewModel);
-        startActivity(intentStoreDetailsActivity);
 
 
     }
@@ -173,9 +172,13 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
         productListAdapter = new StoreListAdapter(StoreListFragment.this, activity, guidelineModelArrayList);
         productListAdapter.setOnItemClickListener(this);
-        binding.fragmentProductlistRvProductList.setAdapter(productListAdapter);
+        //binding.fragmentProductlistRvProductList.setAdapter(productListAdapter);
+        binding.setAdpt(productListAdapter);
 
-        binding.fragmentProductlistRvProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+
+        /*binding.fragmentProductlistRvProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -195,7 +198,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
                     }
                 }
             }
-        });
+        });*/
 
 
     }
@@ -232,6 +235,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
         skeletonScreen.hide();
 
+
         if (userResponse.getResponsedata().getSuccess().equalsIgnoreCase("1")) {
 
             ArrayList<StoreResponse> productModelArrayList = (ArrayList<StoreResponse>) userResponse.getResponsedata().getData();
@@ -241,8 +245,7 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
 
             if (productModelArrayList != null && productModelArrayList.size() > 0) {
                 modelArrayList.addAll(productModelArrayList);
-                productListAdapter.addRecord(modelArrayList);
-                productListAdapter.notifyDataSetChanged();
+                binding.fragmentProductlistRvProductList.scrollToPosition(totalItemCount);
 
 
             } else {
@@ -262,16 +265,46 @@ public class StoreListFragment extends BaseFragment implements StoreListAdapter.
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                //  ((MainActivity) getActivity()).changeFragment(new SearchFragment(), true);
+
 
             }
 
             @Override
             public void onSearchViewClosed() {
-                ((MainActivity) getActivity()).changeFragment(new StoreListFragment(), true);
+                // ((MainActivity) getActivity()).changeFragment(new StoreListFragment(), true);
+                getFragmentManager().popBackStack();
+
             }
         });
 
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        MenuItem itemSearch = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(itemSearch);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+
+        Log.d("--- update observer", "update observer");
+        if (o instanceof StoreViewModel) {
+            StoreListAdapter productListAdapter = (StoreListAdapter) binding.fragmentProductlistRvProductList.getAdapter();
+            StoreViewModel userViewModel = (StoreViewModel) o;
+            //productListAdapter.setProductList(userViewModel.);
+        }
+
+    }
 }
+

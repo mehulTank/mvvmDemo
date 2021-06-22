@@ -18,7 +18,7 @@ import com.cmexpertise.beautyapp.R;
 import java.util.ArrayList;
 
 /**
- * Created by fyu on 11/3/14.
+ * Created by fyu on 11/stra3/14.
  */
 
 public class RippleBackground extends RelativeLayout {

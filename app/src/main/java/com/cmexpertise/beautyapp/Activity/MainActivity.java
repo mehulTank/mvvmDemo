@@ -5,27 +5,30 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmexpertise.beautyapp.BeautyApplication;
 import com.cmexpertise.beautyapp.R;
+import com.cmexpertise.beautyapp.databinding.ActivityMainBinding;
+import com.cmexpertise.beautyapp.fragment.ProfileFragment;
 import com.cmexpertise.beautyapp.fragment.StoreListFragment;
 import com.cmexpertise.beautyapp.util.Preferences;
 import com.cmexpertise.beautyapp.util.Utils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -36,27 +39,18 @@ import java.util.Locale;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
 
-    private TextView txtDrawerUserName;
-    private TextView txtDrawerUserEmail;
-    private TextView toolbarTextView;
-    private DrawerLayout drawer;
-    private RelativeLayout rlLogout;
-
-    private MaterialSearchView searchView;
-    private NavigationView navigationView;
-
-
-    private Toolbar toolbar;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
-
 
     private String fromDtaeCalc = "";
     private String toDateCalc = "";
     private String cityName = "";
 
-
     private int MAX_CLICK_INTERVAL = 1500;
     private long mLastClickTime = 0;
+    private ActivityMainBinding binding;
+
+    private TextView txtDrawerUserName;
+    private TextView txtDrawerUserEmail;
 
 
     public static String getDateTime() {
@@ -68,11 +62,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        Utils.setLanguage(this, Preferences.readString(this, Preferences.SELECTED_LANGUAGE_PREFIX, "en"));
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initComponents();
         FirebaseApp.initializeApp(MainActivity.this);
-        Utils.setLanguage(this, Preferences.readString(this, Preferences.SELECTED_LANGUAGE_PREFIX, "en"));
+
 
     }
 
@@ -81,30 +75,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         BeautyApplication.getmInstance().setActivity(MainActivity.this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        toolbar.setOnClickListener(this);
-        toolbar.setOnClickListener(this);
 
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        toolbarTextView = (TextView) findViewById(R.id.txtTitle);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        rlLogout = (RelativeLayout) findViewById(R.id.rlLogout);
-        rlLogout.setOnClickListener(this);
+        binding.rlLogout.setOnClickListener(this);
+        binding.navView.setNavigationItemSelectedListener(this);
 
         setUpDrawerSync();
+        initToolbar();
+
         setUpHeaderData();
         userChangeListner();
 
         Preferences.getPreferences(MainActivity.this).registerOnSharedPreferenceChangeListener(listener);
-        changeFragment(new StoreListFragment(), false);
         rateUsDialog();
-        changeTitle(true, Preferences.readString(this, Preferences.SELECTED_CITY, ""));
+        homeFragmentCall();
 
     }
+
+    private void initToolbar() {
+
+
+        setSupportActionBar(binding.toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("");
+
+        }
+
+    }
+
 
     private void userChangeListner() {
 
@@ -129,7 +130,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
 
-        View header = navigationView.getHeaderView(0);
+        View header = binding.navView.getHeaderView(0);
+
         txtDrawerUserName = (TextView) header.findViewById(R.id.txtDrawerUserName);
         txtDrawerUserEmail = (TextView) header.findViewById(R.id.txtDrawerUserEmail);
 
@@ -138,41 +140,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             txtDrawerUserName.setText(Preferences.readString(MainActivity.this, Preferences.USER_NAME, ""));
             txtDrawerUserEmail.setText(Preferences.readString(MainActivity.this, Preferences.USER_EMAIL_ID, ""));
 
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer);
+            binding.navView.getMenu().clear();
+            binding.navView.inflateMenu(R.menu.activity_main_drawer);
         } else {
             txtDrawerUserName.setText(getString(R.string.user_name));
             txtDrawerUserEmail.setText(getString(R.string.welcome_guest));
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer_logout);
+            binding.navView.getMenu().clear();
+            binding.navView.inflateMenu(R.menu.activity_main_drawer_logout);
         }
 
     }
 
     private void setUpDrawerSync() {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
                 Utils.hideKeyboard(MainActivity.this);
-
             }
 
-            /** Called when a drawer has settled in a completely open state. */
+            @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 Utils.hideKeyboard(MainActivity.this);
             }
         };
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
-        drawer.closeDrawer(GravityCompat.START);
+        //Setting the actionbarToggle to drawer layout
+        binding.drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
 
     }
 
@@ -191,7 +190,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        if (toDateCalc.isEmpty()) {
 //            rateUsDialogFragment.show(ft, "dialog");
 //        }
-//        if (((daysDiff > 2) && (Integer.parseInt(dialogStatus) == 1)) || (daysDiff == 1)) {
+//        if (((daysDiff > 1) && (Integer.parseInt(dialogStatus) == 1)) || (daysDiff == 1)) {
 //            rateUsDialogFragment.show(ft, "dialog");
 //        }
     }
@@ -218,8 +217,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
 
 
         if (SystemClock.elapsedRealtime() - mLastClickTime < MAX_CLICK_INTERVAL) {
@@ -227,12 +225,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         mLastClickTime = SystemClock.elapsedRealtime();
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.toolbar:
-                Intent locationIntent = new Intent(MainActivity.this, SelectLocationActivity.class);
-                locationIntent.putExtra(Utils.INTENT_FROM_SETTING, getString(R.string.yes));
-                startActivity(locationIntent);
+//                Intent locationIntent = new Intent(MainActivity.this, SelectLocationActivity.class);
+//                startActivity(locationIntent);
                 break;
 
             case R.id.rlLogout:
@@ -252,100 +248,176 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
+        } else if (binding.searchView.isSearchOpen()) {
+            binding.searchView.closeSearch();
         } else {
             super.onBackPressed();
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
-            changeFragment(new StoreListFragment(), false);
-            changeTitle(true, Preferences.readString(this, Preferences.SELECTED_CITY, ""));
-            toolbar.setOnClickListener(this);
+            binding.toolbar.setOnClickListener(this);
+            homeFragmentCall();
 
         } else if (id == R.id.nav_profile) {
 
-            // changeFragment(new StoreListFragment(), false);
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new ProfileFragment(), false);
             changeTitle(false, getString(R.string.Profile));
-            toolbar.setOnClickListener(null);
 
 
         } else if (id == R.id.nav_offers) {
-            //changeFragment(new OfferListFragment(), false);
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new StoreListFragment(), false);
             changeTitle(false, getString(R.string.Offers));
-            toolbar.setOnClickListener(null);
 
         } else if (id == R.id.nav_booking) {
-            // changeFragment(new BookingListFragment(), false);
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new StoreListFragment(), false);
             changeTitle(false, getString(R.string.Bookings));
-            toolbar.setOnClickListener(null);
-        } else if (id == R.id.nav_setting) {
 
-            //changeFragment(new SettingFragment(), false);
+        } else if (id == R.id.nav_setting) {
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new StoreListFragment(), false);
             changeTitle(false, getString(R.string.action_settings));
-            toolbar.setOnClickListener(null);
 
 
         } else if (id == R.id.nav_notification) {
+            binding.toolbar.setOnClickListener(null);
             // changeFragment(new NotificationListFragment(), false);
             changeTitle(false, getString(R.string.notification));
-            toolbar.setOnClickListener(null);
 
 
-        } else if (id == R.id.nav_about) {
-            //changeFragment(new AboutUsFragment(), false);
+        }
+        else if (id == R.id.nav_about) {
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new StoreListFragment(), false);
             changeTitle(false, getString(R.string.AboutUs));
-            toolbar.setOnClickListener(null);
 
 
         } else if (id == R.id.nav_feedback) {
+            binding.toolbar.setOnClickListener(null);
+            changeFragment(new StoreListFragment(), false);
+            changeTitle(false, getString(R.string.feedback));
 
-//            RateUsDialog cdd = new RateUsDialog(MainActivity.this);
-////            cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-////            cdd.show();
-////            toolbar.setOnClickListener(null);
 
-        }
-        else if (id == R.id.nav_login) {
+        } else if (id == R.id.nav_login) {
+            binding.toolbar.setOnClickListener(null);
             Preferences.writeString(this, Preferences.IS_SKIPED, "");
             startActivity(new Intent(this, LoginActivity.class));
-            toolbar.setOnClickListener(null);
+
         }
 
 
         Utils.hideKeyboard(MainActivity.this);
-        drawer.closeDrawer(GravityCompat.START);
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
-    private void changeTitle(boolean isComp, String title) {
+    public void homeFragmentCall() {
 
-        getSupportActionBar().setTitle("" + title);
-        toolbarTextView.setText(Preferences.readString(this, Preferences.SELECTED_CITY, ""));
+        binding.toolbar.setOnClickListener(this);
+        changeFragment(new StoreListFragment(), false);
 
-        if (isComp) {
-            toolbarTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_location_edit, 0);
+
+        if (Preferences.readBoolean(MainActivity.this, Preferences.SELECTEDLOCATIONORCITY, false)) {
+
+            changeTitle(true, Preferences.readString(this, Preferences.SELECTED_CURRENT_CITY, ""));
         } else {
-            toolbarTextView.setCompoundDrawables(null, null, null, null);
+            changeTitle(true, Preferences.readString(this, Preferences.SELECTED_CITY, ""));
         }
 
 
+    }
 
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater mi = getMenuInflater();
+        mi.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                binding.drawerLayout.openDrawer(GravityCompat.START);
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+
+    public void changeTitle(boolean isComp, String title) {
+
+
+        getSupportActionBar().setTitle("" + title);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        binding.toolbar.setTitle("" + title);
+        binding.txtTitle.setText("" + title);
+
+        if (isComp) {
+            binding.txtTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_location_edit, 0);
+        } else {
+            binding.txtTitle.setCompoundDrawables(null, null, null, null);
+        }
+
+    }
+
+
+    public void changeTitleBack(boolean isComp, String title) {
+
+        getSupportActionBar().setTitle("" + title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        binding.toolbar.setTitle("" + title);
+        binding.txtTitle.setText("" + title);
+
+        if (isComp) {
+            binding.txtTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_location_edit, 0);
+        } else {
+            binding.txtTitle.setCompoundDrawables(null, null, null, null);
+        }
+
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
 
     }
 
     private void performLogout() {
+
+
+        BeautyApplication.getmInstance().savePreferenceDataBoolean(getString(R.string.preferances_islogin), false);
+
         Preferences.writeString(MainActivity.this, Preferences.USER_ID, "");
         Preferences.writeString(MainActivity.this, Preferences.SELECTED_LOCATION_ID, "");
         Preferences.writeString(MainActivity.this, Preferences.SELECTED_CATEGORIES_ID, "");
@@ -376,6 +448,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     }
+
+    public void addFragment(Fragment fragment, boolean isAddtoBackstack) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.content_main, fragment, fragment.getClass().getSimpleName());
+        if (isAddtoBackstack)
+            transaction.addToBackStack(fragment.getClass().getSimpleName());
+        transaction.commit();
+
+
+    }
+
 
     public void onLogOutClicked() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)

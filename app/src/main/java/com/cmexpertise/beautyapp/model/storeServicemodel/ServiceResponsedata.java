@@ -15,7 +15,7 @@ public class ServiceResponsedata {
     private String message;
     @SerializedName("count")
     @Expose
-    private String count;
+    private int count;
     @SerializedName("data")
     @Expose
     private List<ServicesResponse> data = null;
@@ -36,11 +36,11 @@ public class ServiceResponsedata {
         this.message = message;
     }
 
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 

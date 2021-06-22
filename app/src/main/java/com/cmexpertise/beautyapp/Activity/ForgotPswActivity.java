@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.ActivityForgotBinding;
@@ -15,7 +16,7 @@ import com.cmexpertise.beautyapp.mvvm.forgot.ForgotViewModel;
 import com.cmexpertise.beautyapp.util.Utils;
 
 /**
- * Created Kailash Patel
+ * Created Nishidh Patel
  */
 
 public class ForgotPswActivity extends BaseActivity implements ForgotNavigator {
@@ -52,6 +53,8 @@ public class ForgotPswActivity extends BaseActivity implements ForgotNavigator {
     @Override
     public void handleError(Throwable throwable) {
         Utils.snackbar(llMain, "" + throwable.getMessage(), true, ForgotPswActivity.this);
+        Utils.hideProgressDialog(this,progress);
+        Utils.hideKeyboard(ForgotPswActivity.this);
     }
 
     @Override
@@ -93,8 +96,10 @@ public class ForgotPswActivity extends BaseActivity implements ForgotNavigator {
     public void forgotResponce(ResponseBase userResponse) {
 
         Utils.hideProgressDialog(this,progress);
+        Utils.hideKeyboard(ForgotPswActivity.this);
+        Toast.makeText(ForgotPswActivity.this,""+userResponse.getResponsedata().getMessage(),Toast.LENGTH_SHORT).show();
 
-        Utils.snackbar(llMain, "" + userResponse.getResponsedata().getMessage(), true, ForgotPswActivity.this);
+       // Utils.snackbar(llMain, "" + userResponse.getResponsedata().getMessage(), true, ForgotPswActivity.this);
 
         if (userResponse.getResponsedata().getSuccess() == 1) {
             finish();

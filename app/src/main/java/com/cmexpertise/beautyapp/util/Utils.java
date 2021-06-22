@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -34,6 +35,9 @@ import android.widget.Toast;
 
 import com.cmexpertise.beautyapp.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -44,7 +48,7 @@ import java.util.Locale;
 public class Utils {
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_FILE = 2;
-
+    public static Fragment curFragment;
 
     public static final String INTENT_SERVICES = "INTENT_SERVICES";
     public static final String INTENT_OFFER_ID = "INTENT_OFFER_ID";
@@ -64,7 +68,6 @@ public class Utils {
     public static final String CATEGORY_LIST = "list_categories";
     public static final String INTENT_STORE_ID = "INTENT_STORE_ID";
     public static final String INTENT_STORE = "INTENT_STORE";
-
 
 
     /**
@@ -219,9 +222,12 @@ public class Utils {
     }
 
 
-    public static void checkPermitionCameraGaller(Activity context)
-    {
+    public static void checkPermitionCameraGaller(Activity context) {
         ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1);
+    }
+
+    public static void checkPermitionLocation(Activity context) {
+        ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,  Manifest.permission.ACCESS_COARSE_LOCATION,}, 1);
     }
 
     /**
@@ -365,10 +371,8 @@ public class Utils {
 
     public static void snackbar(final View view, final String msg, boolean isSnakbar, Context mContext) {
 
-        try
-        {
-            if (isSnakbar)
-            {
+        try {
+            if (isSnakbar) {
                 Snackbar snack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);
                 snack.getView().setBackgroundColor(Color.parseColor("#F0627E"));
                 View viewNew = snack.getView();
@@ -378,10 +382,9 @@ public class Utils {
             } else {
                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_LONG).show();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e){e.printStackTrace();}
-
-
 
 
     }
@@ -413,12 +416,21 @@ public class Utils {
         }
 
 
-       // transaction.add(R.id.activity_menubar_containers, targetedFragment, targetedFragment.getClass().getSimpleName());
+        transaction.add(R.id.content_main, targetedFragment, targetedFragment.getClass().getSimpleName());
         //curFragment = targetedFragment;
         transaction.hide(shooterFragment);
         transaction.addToBackStack(targetedFragment.getClass().getSimpleName());
         transaction.commit();
     }
+
+    public static void addNextFragmentNew(Activity mActivity, Fragment targetedFragment, Fragment shooterFragment, boolean isDownToUp) {
+        final FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
+        transaction.add(R.id.content_main, targetedFragment, targetedFragment.getClass().getSimpleName());
+        transaction.hide(shooterFragment);
+        transaction.addToBackStack(targetedFragment.getClass().getSimpleName());
+        transaction.commit();
+    }
+
 
     public static ProgressDialog showProgressDialog(final Context mActivity, final String message, boolean isCancelable) {
         final ProgressDialog mDialog = new ProgressDialog(mActivity, R.style.customeDialog);
@@ -430,8 +442,9 @@ public class Utils {
         return mDialog;
     }
 
-    public static ProgressDialog showProgressDialog(final Context mActivity ) {
-        final ProgressDialog mDialog = new ProgressDialog(mActivity, R.style.customeDialog);
+    public static ProgressDialog showProgressDialog(final Context mActivity)
+    {
+        final ProgressDialog mDialog = new ProgressDialog(mActivity);
         mDialog.show();
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
@@ -440,10 +453,8 @@ public class Utils {
     }
 
 
-    public static void hideProgressDialog(final Context mActivity ,final ProgressDialog mDialog)
-    {
-        if(mDialog!=null && mDialog.isShowing())
-        {
+    public static void hideProgressDialog(final Context mActivity, final ProgressDialog mDialog) {
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
@@ -459,7 +470,7 @@ public class Utils {
     public static void addNextFragmentWithoutAnimation(Activity mActivity, Fragment targetedFragment, Fragment shooterFragment) {
         final FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
 
-       // transaction.add(R.id.activity_menubar_containers, targetedFragment, targetedFragment.getClass().getSimpleName());
+        // transaction.add(R.id.activity_menubar_containers, targetedFragment, targetedFragment.getClass().getSimpleName());
         //curFragment = targetedFragment;
         transaction.hide(shooterFragment);
         transaction.addToBackStack(targetedFragment.getClass().getSimpleName());
@@ -469,7 +480,7 @@ public class Utils {
 
     public static void addNextFragmentLolipopWithShareElement(Activity mActivity, Fragment targetedFragment, Fragment shooterFragment, View mView, String textTransitionName, String textTransitionImg, View imageView) {
         final FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
-       // transaction.add(R.id.activity_menubar_containers, targetedFragment, targetedFragment.getClass().getSimpleName());
+        // transaction.add(R.id.activity_menubar_containers, targetedFragment, targetedFragment.getClass().getSimpleName());
         //curFragment = targetedFragment;
         transaction.addToBackStack(targetedFragment.getClass().getSimpleName());
 
@@ -569,6 +580,42 @@ public class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
+
+
+    public static String parseDateToddMMyyyy(String time)
+    {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd MMM yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = "";
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+
+
+    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+
+        Location locationA = new Location("point A");
+        locationA.setLatitude(lat1);
+        locationA.setLongitude(lon1);
+        Location locationB = new Location("point B");
+        locationB.setLatitude(lat2);
+        locationB.setLongitude(lon2);
+        return (locationA.distanceTo(locationB) / 1000);
+
+    }
+
+
 
 
 }

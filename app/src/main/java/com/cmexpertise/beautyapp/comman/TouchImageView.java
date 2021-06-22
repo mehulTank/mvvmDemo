@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 public class TouchImageView extends ImageView {
     Matrix matrix;
-    // We can be in one of these 3 states  
+    // We can be in one of these stra3 states
     static final int NONE = 0;
     static final int DRAG = 1;
     static final int ZOOM = 2;

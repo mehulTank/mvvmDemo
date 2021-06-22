@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.ActivityRegisterBinding;
@@ -15,7 +16,7 @@ import com.cmexpertise.beautyapp.mvvm.register.RegisterViewModel;
 import com.cmexpertise.beautyapp.util.Utils;
 
 /**
- * Created Kailash Patel
+ * Created Nishidh Patel
  */
 
 public class RegisterActivity extends BaseActivity implements RegisterNavigator {
@@ -52,6 +53,8 @@ public class RegisterActivity extends BaseActivity implements RegisterNavigator 
     @Override
     public void handleError(Throwable throwable) {
         Utils.snackbar(llMain, "" + throwable.getMessage(), true, RegisterActivity.this);
+        Utils.hideKeyboard(RegisterActivity.this);
+        Utils.hideProgressDialog(this,progress);
     }
 
     @Override
@@ -90,7 +93,7 @@ public class RegisterActivity extends BaseActivity implements RegisterNavigator 
             Utils.snackbar(llMain, checkValidation, true, RegisterActivity.this);
         } else {
             progress = Utils.showProgressDialog(RegisterActivity.this);
-            viewModel.doRegister(fname, lName, email, phone, passwors, cnfPsw);
+            viewModel.doRegister(fname, lName, email, phone, passwors, "0");
         }
 
     }
@@ -99,7 +102,9 @@ public class RegisterActivity extends BaseActivity implements RegisterNavigator 
     public void registerResponce(ResponseBase userResponse) {
 
         Utils.hideProgressDialog(this, progress);
-        Utils.snackbar(llMain, "" + userResponse.getResponsedata().getMessage(), true, RegisterActivity.this);
+        Utils.hideKeyboard(RegisterActivity.this);
+        //Utils.snackbar(llMain, "" + userResponse.getResponsedata().getMessage(), true, RegisterActivity.this);
+        Toast.makeText(RegisterActivity.this,""+userResponse.getResponsedata().getMessage(),Toast.LENGTH_SHORT).show();
 
         if (userResponse.getResponsedata().getSuccess() == 1) {
             finish();

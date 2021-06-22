@@ -21,19 +21,23 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
 
             <com.cmexpertise.beautyapp.customecomponent.CustomTextView
                 android:id="@+id/activity_login_tvSkip"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
-                android:layout_margin="@dimen/_15sdp"
-                android:background="@drawable/ic_close"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/skip"
+                android:onClick="@{loginViewModel::onClickSkip}"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/_21sdp"
+                android:textSize="@dimen/_14sdp"
                 app:font_name="RobotoMedium.ttf" />
 
         </RelativeLayout>
@@ -54,8 +58,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-
                     android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:src="@drawable/ic_app_icon_new"
+                        />
 
 
                     <com.cmexpertise.beautyapp.customecomponent.CustomTextView
@@ -65,6 +74,7 @@
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/_21sdp"
                         android:textStyle="italic"
+                        android:visibility="gone"
                         app:font_name="RobotoThinItalic.ttf" />
 
 
@@ -74,15 +84,16 @@
                         android:text="@string/login_to_continue"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/_24sdp"
+                        android:visibility="gone"
                         app:font_name="RobotoThinItalic.ttf" />
 
 
                     <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
                         android:id="@+id/activity_login_etUserName"
                         style="@style/editTextStyle_ganaral"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:hint="@string/user_name"
-                        android:inputType="text"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:hint="@string/str_email"
+                        android:inputType="textEmailAddress"
                         app:font_name="RobotoLight.ttf" />
 
 
@@ -92,6 +103,7 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:hint="@string/password"
                         android:inputType="textPassword"
+                        android:textAlignment="viewStart"
                         app:font_name="RobotoLight.ttf" />
 
 
@@ -116,8 +128,8 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/backgound_button"
                         android:onClick="@{loginViewModel::onClickLogin}"
-                        android:text="@string/login"
-                        android:textAllCaps="true"
+                        android:text="@string/str_sign_in"
+                        android:textAllCaps="false"
                         app:font_name="RobotoMedium.ttf" />
 
 

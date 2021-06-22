@@ -26,8 +26,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         Utils.setLanguage(this, BeautyApplication.getmInstance().getSharedPreferences().getString(getString((R.string.preferances_language)), "en"));
+        setContentView(R.layout.activity_splash);
         new SplashTask().execute();
     }
 
@@ -58,37 +58,51 @@ public class SplashActivity extends AppCompatActivity {
             boolean isLogin = BeautyApplication.getmInstance().getSharedPreferences().getBoolean(getString((R.string.preferances_islogin)), false);
             boolean isIntro = BeautyApplication.getmInstance().getSharedPreferences().getBoolean(getString((R.string.preferances_isIntro)), false);
 
+//            isLogin=true;
+//
+//            if (!isIntro) {
+//                Intent intent = new Intent(SplashActivity.this, IntroActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+//
+//                com.cmexpertise.beautyapp.util.Preferences.writeString(SplashActivity.this, com.cmexpertise.beautyapp.util.Preferences.SELECTED_LANGUAGE_ID, "1");
+//                com.cmexpertise.beautyapp.util.Preferences.writeString(SplashActivity.this, Preferences.SELECTED_LANGUAGE_PREFIX, "en");
+//            }
+//            else
+//                {
+//                if (isLogin)
+//                {
+//
+//                    if (Preferences.readString(SplashActivity.this, Preferences.SELECTED_CATEGORIES_ID, "").isEmpty())
+//                    {
+////                        Intent intent = new Intent(SplashActivity.this, SelectLocationActivity.class);
+////                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                        startActivity(intent);
+////                        SplashActivity.this.finish();
+//                    }
+//                    else
+//                    {
+//                        Intent mMenuIntent = new Intent(SplashActivity.this, MainActivity.class);
+//                        startActivity(mMenuIntent);
+//                        overridePendingTransition(R.anim.anim_right_in, R.anim.anim_left_out);
+//                        finish();
+//                    }
+//
+//
+//                } else {
+//
+//                }
+//
+//            }
 
-            if (!isIntro) {
-                Intent intent = new Intent(SplashActivity.this, IntroActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
 
-                com.cmexpertise.beautyapp.util.Preferences.writeString(SplashActivity.this, com.cmexpertise.beautyapp.util.Preferences.SELECTED_LANGUAGE_ID, "1");
-                com.cmexpertise.beautyapp.util.Preferences.writeString(SplashActivity.this, Preferences.SELECTED_LANGUAGE_PREFIX, "en");
-            } else {
-                if (isLogin) {
-
-                    if (!Preferences.readString(SplashActivity.this, Preferences.USER_ID, "").equals("")) {
-                        Intent intent = new Intent(SplashActivity.this, SelectLocationActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        SplashActivity.this.finish();
-                    }
-
-
-                } else {
-                    Intent mMenuIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(mMenuIntent);
-                    overridePendingTransition(R.anim.anim_right_in, R.anim.anim_left_out);
-                    finish();
-                }
-
-            }
-
+            Intent mMenuIntent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(mMenuIntent);
+            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_left_out);
+            finish();
 
         }
     }

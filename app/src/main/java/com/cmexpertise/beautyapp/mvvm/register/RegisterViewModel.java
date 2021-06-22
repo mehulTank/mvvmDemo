@@ -20,7 +20,7 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * Created by Kailash Patel
+ * Created by Nishidh Patel
  */
 
 public class RegisterViewModel extends Observable {
@@ -29,6 +29,8 @@ public class RegisterViewModel extends Observable {
     private Context context;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RegisterNavigator navigator;
+
+
 
     public RegisterViewModel(@NonNull Context context) {
         this.context = context;
@@ -90,21 +92,10 @@ public class RegisterViewModel extends Observable {
         UsersService usersService = appController.getUserService();
 
 
-        Disposable disposable = usersService.doRegister(fname, lname, email, mobile, password, loginType)
+        Disposable disposable = usersService.doRegister(fname, lname, email, password, mobile, loginType)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResponseBase>() {
-                    @Override
-                    public void accept(ResponseBase userResponse) throws Exception {
-                        navigator.registerResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        navigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> navigator.registerResponce(userResponse),throwable -> navigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
     }

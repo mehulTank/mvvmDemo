@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by admin on 2/7/2017.
+ * Created by admin on stra2/7/2017.
  */
 
 public class StoreResponse implements Parcelable {
-
 
 
     @SerializedName("store_id")
@@ -113,11 +112,47 @@ public class StoreResponse implements Parcelable {
     @Expose
     private String dtUpdated;
 
+    @SerializedName("aboutstore")
+    @Expose
+    private String aboutstore;
+
+    public String getOff_days() {
+        return off_days;
+    }
+
+    public void setOff_days(String off_days) {
+        this.off_days = off_days;
+    }
+
+    @SerializedName("off_days")
+    @Expose
+    private String off_days;
+
+
     @SerializedName("offer_data")
     @Expose
     private List<StoreOfferData> offerData = null;
 
-    private StoreResponse(Parcel in) {
+    @SerializedName("image_array")
+    @Expose
+    private List<StoreImages> storeImagesList = null;
+
+
+    private String offerId = "";
+    private String serviceid = "";
+    private String offerTitle = "";
+
+    public String getOfferTotal() {
+        return offerTotal;
+    }
+
+    public void setOfferTotal(String offerTotal) {
+        this.offerTotal = offerTotal;
+    }
+
+    private String offerTotal = "";
+
+    public StoreResponse(Parcel in) {
         this.id = in.readString();
         this.categoryId = in.readString();
         this.locationId = in.readString();
@@ -142,10 +177,35 @@ public class StoreResponse implements Parcelable {
         this.status = in.readString();
         this.dtAdded = in.readString();
         this.dtUpdated = in.readString();
+        this.offerId = in.readString();
+        this.serviceid = in.readString();
+        this.offerTitle = in.readString();
+        this.aboutstore = in.readString();
+        this.off_days = in.readString();
+        this.offerTotal = in.readString();
 //        offerData = in.readParcelable(StoreOfferData.class.getClassLoader());
         this.offerData = new ArrayList<StoreOfferData>();
+        this.storeImagesList = new ArrayList<StoreImages>();
         in.readList(this.offerData, StoreOfferData.class.getClassLoader());
+        in.readList(this.storeImagesList, StoreImages.class.getClassLoader());
         ;
+    }
+
+
+    public String getAboutstore() {
+        return aboutstore;
+    }
+
+    public void setAboutstore(String aboutstore) {
+        this.aboutstore = aboutstore;
+    }
+
+    public List<StoreImages> getStoreImagesList() {
+        return storeImagesList;
+    }
+
+    public void setStoreImagesList(List<StoreImages> storeImagesList) {
+        this.storeImagesList = storeImagesList;
     }
 
     public String getId() {
@@ -348,6 +408,36 @@ public class StoreResponse implements Parcelable {
         this.offerData = offerData;
     }
 
+    public String getServiceid() {
+        return serviceid;
+    }
+
+    public void setServiceid(String serviceid) {
+        this.serviceid = serviceid;
+    }
+
+
+    public String getOfferTitle() {
+        return offerTitle;
+    }
+
+    public void setOfferTitle(String offerTitle) {
+        this.offerTitle = offerTitle;
+    }
+
+
+    public StoreResponse() {
+
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -379,7 +469,14 @@ public class StoreResponse implements Parcelable {
         dest.writeString(status);
         dest.writeString(dtAdded);
         dest.writeString(dtUpdated);
+        dest.writeString(offerId);
+        dest.writeString(serviceid);
+        dest.writeString(offerTitle);
+        dest.writeString(aboutstore);
+        dest.writeString(off_days);
+        dest.writeString(offerTotal);
         dest.writeList(offerData);
+        dest.writeList(storeImagesList);
 
     }
 
@@ -395,8 +492,6 @@ public class StoreResponse implements Parcelable {
             return new StoreResponse[size];
         }
     };
-
-
 
 
 }

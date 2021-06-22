@@ -22,7 +22,6 @@
     <color name="facebook">#303F9F</color>
     <color name="white">#ffffff</color>
     <color name="yellow">#FFA102</color>
-
     <color name="colorsignup">#94DC7181</color>
     <color name="google">#E04108</color>
 
@@ -102,5 +101,17 @@
     <color name="light_transparent">#16000000</color>
     <color name="dark_transparent">#24000000</color>
     <color name="bg_offer">#26FF6D86</color>
+    <color name="price_color">#30A062</color>
+    <color name="service_row_bg_color">#F4F4F4</color>
+    <color name="payment_lbl">#FF6A83</color>
+    <color name="payment_total">#FF6C85</color>
+    <color name="payment_status">#3EA969</color>
+    <color name="bookiing_booked_bg_color">#DAFFEB</color>
+    <color name="bookiing_booked_txt_color">#6AD199</color>
+    <color name="bookiing_cancel_txt_color">#FF5F5F</color>
+    <color name="bookiing_cancel_bg_color">#FEDEDE</color>
+    <color name="bookiing_complite_txt_color">#82B7FF</color>
+    <color name="bookiing_complite_bg_color">#EBF3FF</color>
+    <color name="review_border_color">#C2C0C0</color>
 
 </resources>

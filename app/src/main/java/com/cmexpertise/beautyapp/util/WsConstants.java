@@ -3,7 +3,8 @@ package com.cmexpertise.beautyapp.util;
 public class WsConstants {
 
 
-    public final static String BASE_URL = "http://cmexpertiseinfotech.in/beauty/index.php/api/";
+    //public final static String BASE_URL = "http://cmexpertiseinfotech.in/beauty/index.php/api/";
+    public final static String BASE_URL = "http://cmexpertiseinfotech.in/beauty/api_v2/";
     public final static int CONNECTION_TIMEOUT = 30;
 
 

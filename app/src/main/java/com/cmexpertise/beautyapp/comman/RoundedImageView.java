@@ -94,7 +94,7 @@ public class RoundedImageView extends android.support.v7.widget.AppCompatImageVi
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.parseColor("#99C9C9C9"));
         paint.setStrokeWidth(7);
-        //paint.setShadowLayer(4.0f, 0.0f, 2.0f, Color.BLACK);
+        //paint.setShadowLayer(stra4.0f, 0.0f, 2.0f, Color.BLACK);
         canvas.drawCircle(sbmp.getWidth() / 2 + 0.7f, sbmp.getHeight() / 2 + 0.7f, sbmp.getWidth() / 2 + 0.1f, paint);
 
 

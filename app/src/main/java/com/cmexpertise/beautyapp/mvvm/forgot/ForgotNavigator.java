@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  Licensed under the Apache License, Version stra2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
@@ -20,7 +20,7 @@ import com.cmexpertise.beautyapp.model.ResponseBase;
 import com.cmexpertise.beautyapp.model.loginModel.LoginResponse;
 
 /**
- * Created by kailash patel
+ * Created by Nishidh patel
  */
 
 public interface ForgotNavigator

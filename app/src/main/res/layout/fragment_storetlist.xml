@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <import type="android.view.View" />
-        <variable
-            name="storeViewModel"
-            type="com.cmexpertise.beautyapp.mvvm.storelist.StoreViewModel" />
-    </data>
 
     <com.cmexpertise.beautyapp.comman.SlidingLinearLayout
         android:id="@+id/fragment_productlist_llContainer"
@@ -18,17 +10,7 @@
         android:orientation="vertical">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_productlist_rvProductList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
-            android:layout_weight="1"
-            android:background="@color/bg_color">
-
-        </android.support.v7.widget.RecyclerView>
-
-
+        <!--android:scrollEvent="@{1}"-->
         <LinearLayout
             android:id="@+id/fragment_productlist_llLoadMoreProgress"
             android:layout_width="match_parent"
@@ -48,6 +30,49 @@
         </LinearLayout>
 
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_productlist_rvProductList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:adapter="@{adpt}"
+            android:background="@color/bg_color"
+            android:scrollEvent="@{1}">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <!--android:scrollEvent="@{storeViewModel::onSelectItem(recyclerview)}-->
+
+        <!--bind:onScrolledToBottom="@{(page) -> storeViewModel.onSelectItem(page)}"-->
+        <!--<android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_productlist_rvProductList"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:adapter="@{adpt}"
+            android:background="@color/bg_color">
+
+        </android.support.v7.widget.RecyclerView>-->
+
+
     </com.cmexpertise.beautyapp.comman.SlidingLinearLayout>
+
+
+    <data>
+
+        <variable
+            name="storeViewModel"
+            type="com.cmexpertise.beautyapp.mvvm.storelist.StoreViewModel" />
+
+
+        <variable
+            name="adpt"
+            type="com.cmexpertise.beautyapp.adapter.StoreListAdapter" />
+    </data>
+
 
 </layout>

@@ -21,6 +21,12 @@
             android:id="@+id/nav_booking"
             android:icon="@drawable/menu_bookig"
             android:title="@string/bookings" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/menu_aboutus"
+            android:title="@string/about" />
+
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/menu_settig"
@@ -32,10 +38,7 @@
             android:title="@string/notification"
             android:visible="false" />
 
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/menu_aboutus"
-            android:title="@string/about" />
+
         <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/menu_feedback"

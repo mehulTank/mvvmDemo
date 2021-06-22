@@ -2,22 +2,19 @@ package com.cmexpertise.beautyapp.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.location.Location;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.cmexpertise.beautyapp.R;
 import com.cmexpertise.beautyapp.databinding.RowStorelistBinding;
 import com.cmexpertise.beautyapp.fragment.StoreListFragment;
+import com.cmexpertise.beautyapp.model.storeListmodel.StoreListViewModel;
 import com.cmexpertise.beautyapp.model.storeListmodel.StoreResponse;
-import com.cmexpertise.beautyapp.util.Constans;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +26,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private StoreListFragment productListFragment;
     private boolean isLoading;
     private int lastPosition = -1;
-    private RowStorelistBinding rowProductlistBinding;
+    private RowStorelistBinding binding;
     private DecimalFormat df;
 
 
@@ -48,10 +45,10 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        rowProductlistBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.row_storelist, parent, false);
-        View v = rowProductlistBinding.getRoot();
+        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.row_storelist, parent, false);
+        View v = binding.getRoot();
         v.setOnClickListener(this);
-        return new ViewHolderData(v);
+        return new ViewHolderData(binding);
 
     }
 
@@ -73,10 +70,6 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    public void addRecord(ArrayList<StoreResponse> sleeptipsModelArrayList) {
-        productModelList = sleeptipsModelArrayList;
-    }
-
 
     @Override
     public int getItemCount() {
@@ -85,7 +78,6 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onClick(final View v) {
-        // Give some time to the ripple to finish the effect
         if (onItemClickListener != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -93,52 +85,6 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     onItemClickListener.onItemClick(v, (StoreResponse) v.getTag());
                 }
             }, 200);
-        }
-    }
-
-    public interface OnItemClickListener {
-
-        void onItemClick(View view, StoreResponse viewModel);
-
-    }
-
-
-    protected class ViewHolderData extends RecyclerView.ViewHolder {
-
-
-        public ViewHolderData(View itemView) {
-            super(itemView);
-
-
-        }
-
-        public void bindData(StoreResponse item, int position) {
-
-            itemView.setTag(item);
-            rowProductlistBinding.fragmentStoreRowTxtStoreName.setText("" + item.getName());
-            Glide.with(mContext).load(item.getImage()).placeholder(R.drawable.ic_placeholder).centerCrop().into(rowProductlistBinding.rowStoreIvStore);
-
-            if (item.getAvgRate() != null) {
-                rowProductlistBinding.fragmentStoreRowTxtStoreRbStore.setRating(Float.parseFloat(item.getAvgRate()));
-            } else {
-                rowProductlistBinding.fragmentStoreRowTxtStoreRbStore.setRating(0);
-            }
-
-            rowProductlistBinding.fragmentStoreRowTxtStoreDistance.setText(String.valueOf(item.getAvgRate()));
-            rowProductlistBinding.fragmentStoreRowTxtStoreName.setTag(item);
-
-
-            try {
-                double distance = distance(Constans.CURRENT_LATITUDE,
-                        Constans.CURRENT_LONGITUDE,
-                        Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
-                rowProductlistBinding.fragmentStoreRowTxtStoreDistance.setText(df.format((distance)) + " " + mContext.getString(R.string.kmaway));
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-
-
-
         }
     }
 
@@ -154,15 +100,33 @@ public class StoreListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return isLoading;
     }
 
-    private double distance(double lat1, double lon1, double lat2, double lon2) {
+    public interface OnItemClickListener {
 
-        Location locationA = new Location("point A");
-        locationA.setLatitude(lat1);
-        locationA.setLongitude(lon1);
-        Location locationB = new Location("point B");
-        locationB.setLatitude(lat2);
-        locationB.setLongitude(lon2);
-        return (locationA.distanceTo(locationB) / 1000);
+        void onItemClick(View view, StoreResponse viewModel);
 
     }
+
+    protected class ViewHolderData extends RecyclerView.ViewHolder {
+
+
+        private RowStorelistBinding binding;
+        private StoreListViewModel storeListViewModel;
+
+
+        public ViewHolderData(RowStorelistBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+
+
+        }
+
+        public void bindData(StoreResponse item, int position) {
+
+            itemView.setTag(item);
+            storeListViewModel = new StoreListViewModel(item);
+            binding.setData(storeListViewModel);
+
+        }
+    }
+
 }

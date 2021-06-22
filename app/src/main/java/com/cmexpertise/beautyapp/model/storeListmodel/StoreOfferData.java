@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by admin on 3/2/2017.
+ * Created by admin on stra3/stra2/2017.
  */
 
 public class StoreOfferData implements Parcelable {

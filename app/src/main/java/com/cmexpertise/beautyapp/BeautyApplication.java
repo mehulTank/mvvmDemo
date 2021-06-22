@@ -10,8 +10,12 @@ import com.cmexpertise.beautyapp.util.WsConstants;
 import com.cmexpertise.beautyapp.webservice.UsersService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -136,13 +140,39 @@ public class BeautyApplication extends Application {
         this.activity = activity;
     }
 
+
+
     public UsersService getUserService() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(WsConstants.BASE_URL)
+
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        okHttpClient.addInterceptor(interceptor);
+        okHttpClient.connectTimeout(100, TimeUnit.SECONDS);
+        okHttpClient.readTimeout(100, TimeUnit.SECONDS);
+        okHttpClient.writeTimeout(100, TimeUnit.SECONDS);
+        okHttpClient.retryOnConnectionFailure(true);
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(WsConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient.build())
                 .build();
+
         return usersService = retrofit.create(UsersService.class);
 
+
+    }
+
+    private OkHttpClient getClient(HttpLoggingInterceptor interceptor) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(100, TimeUnit.SECONDS).writeTimeout(100, TimeUnit.SECONDS).readTimeout(300, TimeUnit.SECONDS);
+        httpClient.addInterceptor(interceptor);
+        OkHttpClient client = httpClient.build();
+        return client;
     }
 
 

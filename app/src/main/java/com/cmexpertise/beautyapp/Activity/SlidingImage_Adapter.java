@@ -8,20 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+
 import com.cmexpertise.beautyapp.R;
+import com.cmexpertise.beautyapp.model.storeListmodel.StoreImages;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SlidingImage_Adapter extends PagerAdapter {
 
 
-    private ArrayList<String> IMAGES;
+    private ArrayList<StoreImages> IMAGES;
     private LayoutInflater inflater;
     private Context context;
 
 
-    public SlidingImage_Adapter(Context context, ArrayList<String> IMAGES) {
+    public SlidingImage_Adapter(Context context, ArrayList<StoreImages> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
@@ -43,7 +45,14 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
         assert imageLayout != null;
         final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
-        Glide.with(context).load(IMAGES.get(position)).placeholder(R.drawable.ic_placeholder).centerCrop().into(imageView);
+        //Glide.with(context).load(IMAGES.get(position).getImage()).placeholder(R.drawable.ic_placeholder).centerCrop().into(imageView);
+
+
+        Picasso.with(context).load(IMAGES.get(position).getImage())
+                .error(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.placeholder_thumb)
+                .resize(400, 300)
+                .into(imageView);
 
 
         view.addView(imageLayout, 0);

@@ -21,7 +21,7 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * Created by Kailash Patel
+ * Created by Nishidh Patel
  */
 
 public class LoginViewModel extends Observable {
@@ -30,6 +30,7 @@ public class LoginViewModel extends Observable {
     private Context context;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private LoginNavigator loginNavigator;
+
 
     public LoginViewModel(@NonNull Context context) {
         this.context = context;
@@ -55,6 +56,10 @@ public class LoginViewModel extends Observable {
 
     public void onClickLogin(View view) {
         loginNavigator.login();
+    }
+
+    public void onClickSkip(View view) {
+        loginNavigator.skip();
     }
 
     public void onClickRegister(View view) {
@@ -83,18 +88,7 @@ public class LoginViewModel extends Observable {
         Disposable disposable = usersService.doLogin(userEmail, password, type)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse userResponse) throws Exception {
-                        loginNavigator.loginResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        loginNavigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> loginNavigator.loginResponce(userResponse),throwable -> loginNavigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
     }
@@ -110,18 +104,7 @@ public class LoginViewModel extends Observable {
         Disposable disposable = usersService.addDeviceToken(uID,deviceId,fbToken,deviceType)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResponseBase>() {
-                    @Override
-                    public void accept(ResponseBase userResponse) throws Exception {
-                        loginNavigator.addDeviceResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        loginNavigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> loginNavigator.addDeviceResponce(userResponse),throwable -> loginNavigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
     }
@@ -148,18 +131,7 @@ public class LoginViewModel extends Observable {
         Disposable disposable = usersService.doFBSocialLogin(userName,lastname,email,phone,type,fbID)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse userResponse) throws Exception {
-                        loginNavigator.loginResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        loginNavigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> loginNavigator.loginResponce(userResponse),throwable -> loginNavigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
 
@@ -174,18 +146,7 @@ public class LoginViewModel extends Observable {
         Disposable disposable = usersService.doGoogleSocialLogin(userName,lastname,email,phone,type,fbID)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse userResponse) throws Exception {
-                        loginNavigator.loginResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        loginNavigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> loginNavigator.loginResponce(userResponse),throwable -> loginNavigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
 

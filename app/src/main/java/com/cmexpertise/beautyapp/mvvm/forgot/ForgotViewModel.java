@@ -21,7 +21,7 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * Created by Kailash Patel
+ * Created by Nishidh Patel
  */
 
 public class ForgotViewModel extends Observable {
@@ -69,18 +69,7 @@ public class ForgotViewModel extends Observable {
         Disposable disposable = usersService.doForgotPasswordDetails(userEmail)
                 .subscribeOn(appController.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResponseBase>() {
-                    @Override
-                    public void accept(ResponseBase userResponse) throws Exception {
-                        loginNavigator.forgotResponce(userResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        loginNavigator.handleError(throwable);
-                    }
-                });
+                .subscribe(userResponse -> loginNavigator.forgotResponce(userResponse),throwable -> loginNavigator.handleError(throwable));
 
         compositeDisposable.add(disposable);
     }

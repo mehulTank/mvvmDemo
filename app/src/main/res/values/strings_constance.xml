@@ -3,9 +3,9 @@
 
     <!--http://sambhavlabs.com/app_automobile/api/-->
 
-    <string name="ws_scheme_http">http</string>
-    <string name="ws_host">sambhavlabs.com</string>
-    <string name="ws_pathsegment">app_automobile/api</string>
+    <string name="facebook_app_id">658017587735861</string>
+    <string name="fb_login_protocol_scheme">fb658017587735861</string>
+    <string name="fb_app_id">658017587735861</string>
 
     <string name="preferances_islogin">isLogin</string>
     <string name="preferances_isIntro">isIntro</string>
@@ -70,5 +70,17 @@
     <string name="bdl_service_time">bdl_service_time</string>
     <string name="bdl_service_instruction">bdl_service_instruction</string>
     <string name="bdl_product_id">product_id</string>
+    <string name="bdl_serives_modellist">bdl_serives_modellist</string>
+    <string name="bdl_staff_model">bdl_staff_model</string>
+    <string name="bdl_model">bdl_model</string>
+    <string name="bdl_selectedDate">selectedDate</string>
+    <string name="bdl_openTIme">openTIme</string>
+    <string name="bdl_closeTime">closeTime</string>
+    <string name="bdl_selectedTime">selectedTime</string>
+    <string name="bdl_bookedSlot">bookedSlot</string>
+    <string name="bdl_selectNoOfSlot">selectNoOfSlot</string>
+    <string name="status_booked">Booked</string>
+    <string name="status_canceled">Cancelled</string>
+    <string name="status_complited">Completed</string>
 
 </resources>

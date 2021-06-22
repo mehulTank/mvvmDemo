@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Kailash Patel
+ * Created by Nishidh Patel
  */
 
 public class CurrentLocation extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -115,7 +115,7 @@ public class CurrentLocation extends Service implements GoogleApiClient.Connecti
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        // mLocationRequest.setNumUpdates(2);
+        // mLocationRequest.setNumUpdates(stra2);
         // mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -166,9 +166,6 @@ public class CurrentLocation extends Service implements GoogleApiClient.Connecti
     }
 
 
-    protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) CurrentLocation.this);
-    }
 
 
     public static android.location.Location getmCurrentLocation() {
@@ -191,6 +188,7 @@ public class CurrentLocation extends Service implements GoogleApiClient.Connecti
 
             Preferences.writeString(getApplicationContext(), Preferences.LATITUDE,  mCurrentLocation.getLatitude() + "");
             Preferences.writeString(getApplicationContext(), Preferences.LONGITUDE,  mCurrentLocation.getLongitude() + "");
+
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
                 List<Address> addresses = geocoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1);

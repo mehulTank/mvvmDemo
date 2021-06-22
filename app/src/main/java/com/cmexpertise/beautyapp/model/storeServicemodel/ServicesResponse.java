@@ -1,28 +1,21 @@
 package com.cmexpertise.beautyapp.model.storeServicemodel;
 
+
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ServicesResponse implements Parcelable {
+public class ServicesResponse implements Parcelable
+{
 
-    public static final Creator<ServicesResponse> CREATOR = new Creator<ServicesResponse>() {
-        @Override
-        public ServicesResponse createFromParcel(Parcel source) {
-            return new ServicesResponse(source);
-        }
 
-        @Override
-        public ServicesResponse[] newArray(int size) {
-            return new ServicesResponse[size];
-        }
-    };
     @SerializedName("service_id")
     @Expose
     private String id;
-    @SerializedName("store_id")
+    @SerializedName("service_store_id")
     @Expose
     private String storeId;
     @SerializedName("name")
@@ -43,21 +36,36 @@ public class ServicesResponse implements Parcelable {
     @SerializedName("dt_updated")
     @Expose
     private String dtUpdated;
-    private String isChecked;
 
-    public ServicesResponse() {
+    private String isChecked = "false";
+
+
+    public ServicesResponse(Parcel in) {
+        id = in.readString();
+        storeId = in.readString();
+        name = in.readString();
+        price = in.readString();
+        time = in.readString();
+        status = in.readString();
+        dtAdded = in.readString();
+        dtUpdated = in.readString();
+
     }
 
-    protected ServicesResponse(Parcel in) {
-        this.id = in.readString();
-        this.storeId = in.readString();
-        this.name = in.readString();
-        this.price = in.readString();
-        this.time = in.readString();
-        this.status = in.readString();
-        this.dtAdded = in.readString();
-        this.dtUpdated = in.readString();
-        this.isChecked = in.readString();
+    public static final Creator<ServicesResponse> CREATOR = new Creator<ServicesResponse>() {
+        @Override
+        public ServicesResponse createFromParcel(Parcel in) {
+            return new ServicesResponse(in);
+        }
+
+        @Override
+        public ServicesResponse[] newArray(int size) {
+            return new ServicesResponse[size];
+        }
+    };
+
+    public ServicesResponse() {
+
     }
 
     public String getId() {
@@ -132,6 +140,7 @@ public class ServicesResponse implements Parcelable {
         this.isChecked = isChecked;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -139,14 +148,14 @@ public class ServicesResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.storeId);
-        dest.writeString(this.name);
-        dest.writeString(this.price);
-        dest.writeString(this.time);
-        dest.writeString(this.status);
-        dest.writeString(this.dtAdded);
-        dest.writeString(this.dtUpdated);
-        dest.writeString(this.isChecked);
+        dest.writeString(id);
+        dest.writeString(storeId);
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(time);
+        dest.writeString(status);
+        dest.writeString(dtAdded);
+        dest.writeString(dtUpdated);
+
     }
 }
