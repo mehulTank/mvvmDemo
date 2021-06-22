@@ -1,6 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.cmexpertise.beautyapp.comman.SlidingRelativeLayout
+    <com.example.mvvmdemo.comman.SlidingRelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -11,6 +11,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.cmexpertise.beautyapp.comman.SlidingRelativeLayout>
+    </com.example.mvvmdemo.comman.SlidingRelativeLayout>
 
 </layout>

@@ -8,7 +8,7 @@
 
         <variable
             name="loginViewModel"
-            type="com.cmexpertise.beautyapp.mvvm.login.LoginViewModel" />
+            type="com.example.mvvmdemo.mvvm.login.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:visibility="gone">
 
 
-            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+            <com.example.mvvmdemo.customecomponent.CustomTextView
                 android:id="@+id/activity_login_tvSkip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/welcome_back"
@@ -78,7 +78,7 @@
                         app:font_name="RobotoThinItalic.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/login_to_continue"
@@ -88,7 +88,7 @@
                         app:font_name="RobotoThinItalic.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/activity_login_etUserName"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_30sdp"
@@ -97,7 +97,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/activity_login_etPassword"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_15sdp"
@@ -107,7 +107,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:id="@+id/activity_login_tvForgot"
                         style="@style/textStyle"
                         android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:id="@+id/activity_login_tvLogin"
                         style="@style/textStyle"
                         android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                         app:font_name="RobotoMedium.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         style="@style/textviewStyle_general"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:text="@string/orconnect"
@@ -165,7 +165,7 @@
                                 android:src="@drawable/ic_gmail" />
 
 
-                            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                            <com.example.mvvmdemo.customecomponent.CustomTextView
                                 android:id="@+id/activity_login_tvGoogle"
                                 style="@style/textStyle"
                                 android:layout_width="wrap_content"
@@ -197,7 +197,7 @@
                                 android:src="@drawable/facebook" />
 
 
-                            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                            <com.example.mvvmdemo.customecomponent.CustomTextView
                                 android:id="@+id/activity_login_tvFacebook"
                                 style="@style/textStyle"
                                 android:layout_width="wrap_content"
@@ -222,7 +222,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:orientation="horizontal">
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         style="@style/textviewStyle_general"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -231,7 +231,7 @@
                         android:text="@string/dont_have_acc"
                         app:font_name="RobotoMedium.ttf" />
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:id="@+id/activity_login_tvRegister"
                         style="@style/textStyle"
                         android:layout_width="@dimen/_90sdp"

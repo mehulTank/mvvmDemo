@@ -40,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                        <com.example.mvvmdemo.customecomponent.CustomTextView
                             android:id="@+id/txtTitle"
                             style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
                             android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
                 android:layoutDirection="locale"
                 android:background="@color/colorPrimary">
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

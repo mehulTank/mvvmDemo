@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <com.cmexpertise.beautyapp.comman.SlidingLinearLayout
+    <com.example.mvvmdemo.comman.SlidingLinearLayout
         android:id="@+id/fragment_productlist_llContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,19 +59,19 @@
         </android.support.v7.widget.RecyclerView>-->
 
 
-    </com.cmexpertise.beautyapp.comman.SlidingLinearLayout>
+    </com.example.mvvmdemo.comman.SlidingLinearLayout>
 
 
     <data>
 
         <variable
             name="storeViewModel"
-            type="com.cmexpertise.beautyapp.mvvm.storelist.StoreViewModel" />
+            type="com.example.mvvmdemo.mvvm.storelist.StoreViewModel" />
 
 
         <variable
             name="adpt"
-            type="com.cmexpertise.beautyapp.adapter.StoreListAdapter" />
+            type="com.example.mvvmdemo.adapter.StoreListAdapter" />
     </data>
 
 

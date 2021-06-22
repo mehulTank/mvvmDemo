@@ -7,7 +7,7 @@
         <import type="android.view.View" />
         <variable
             name="profileViewModel"
-            type="com.cmexpertise.beautyapp.mvvm.profile.ProfileViewModel" />
+            type="com.example.mvvmdemo.mvvm.profile.ProfileViewModel" />
     </data>
 
 
@@ -52,7 +52,7 @@
                         android:src="@drawable/ic_app_icon_new" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/fragment_profile_etFirstName"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -61,7 +61,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/fragment_profile_etLastName"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -70,7 +70,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/fragment_profile_etEmail"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -80,7 +80,7 @@
                         app:font_name="RobotoLight.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                    <com.example.mvvmdemo.customecomponent.CustomEdittext
                         android:id="@+id/fragment_profile_etMobile"
                         style="@style/editTextStyle_ganaral"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -89,7 +89,7 @@
                         app:font_name="Roboto-Light.ttf" />
 
 
-                    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                    <com.example.mvvmdemo.customecomponent.CustomTextView
                         android:id="@+id/fragment_profile_tvSubmit"
                         style="@style/textStyle"
                         android:layout_width="match_parent"

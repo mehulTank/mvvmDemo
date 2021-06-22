@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.cmexpertise.beautyapp">
+    package="com.example.mvvmdemo">
 
     <supports-screens
         android:anyDensity="true"
@@ -24,7 +24,7 @@
         android:required="true" />
 
     <application
-        android:name="com.cmexpertise.beautyapp.BeautyApplication"
+        android:name="com.example.mvvmdemo.BeautyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_new"
@@ -49,20 +49,20 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <service android:name=".service.CurrentLocation" />
+        <service android:name="com.example.mvvmdemo.service.CurrentLocation" />
 
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.example.mvvmdemo.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.example.mvvmdemo.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".BroadcastReceiver.NotificationReceiver">
+        <receiver android:name="com.example.mvvmdemo.BroadcastReceiver.NotificationReceiver">
             <intent-filter>
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
 
@@ -100,7 +100,7 @@
         </provider>
 
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.SplashActivity"
+            android:name="com.example.mvvmdemo.Activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name_new"
             android:screenOrientation="portrait"
@@ -112,28 +112,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.LoginActivity"
+            android:name="com.example.mvvmdemo.Activity.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.IntroActivity"
+            android:name="com.example.mvvmdemo.Activity.IntroActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.ForgotPswActivity"
+            android:name="com.example.mvvmdemo.Activity.ForgotPswActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.RegisterActivity"
+            android:name="com.example.mvvmdemo.Activity.RegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -141,7 +141,7 @@
 
 
         <activity
-            android:name="com.cmexpertise.beautyapp.Activity.MainActivity"
+            android:name="com.example.mvvmdemo.Activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

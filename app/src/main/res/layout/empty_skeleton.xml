@@ -6,7 +6,7 @@
     android:background="@android:color/white">
 
 
-    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+    <com.example.mvvmdemo.customecomponent.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"

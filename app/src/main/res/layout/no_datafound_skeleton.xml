@@ -16,7 +16,7 @@
         android:visibility="gone"
         app:srcCompat="@drawable/ic_signal_wifi_off_primary_color_36dp" />
 
-    <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+    <com.example.mvvmdemo.customecomponent.CustomTextView
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -4,13 +4,13 @@
 
     <data>
 
-        <import type="com.cmexpertise.beautyapp.util.Utils" />
+        <import type="com.example.mvvmdemo.util.Utils" />
 
-        <import type="com.cmexpertise.beautyapp.util.Constans" />
+        <import type="com.example.mvvmdemo.util.Constans" />
 
         <variable
             name="data"
-            type="com.cmexpertise.beautyapp.model.storeListmodel.StoreListViewModel" />
+            type="com.example.mvvmdemo.model.storeListmodel.StoreListViewModel" />
 
 
 
@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp">
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:id="@+id/fragment_store_row_txt_store_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                     android:src="@drawable/ic_location_pink" />
 
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:id="@+id/fragment_store_row_txt_store_distance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

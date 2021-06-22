@@ -32,7 +32,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:orientation="vertical">
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:id="@+id/txtDrawerUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                     android:textSize="@dimen/_13sdp"
                     app:font_name="RobotoRegular.ttf" />
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:id="@+id/txtDrawerUserEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

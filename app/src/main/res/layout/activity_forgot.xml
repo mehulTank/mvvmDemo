@@ -8,7 +8,7 @@
 
         <variable
             name="forgotViewModel"
-            type="com.cmexpertise.beautyapp.mvvm.forgot.ForgotViewModel" />
+            type="com.example.mvvmdemo.mvvm.forgot.ForgotViewModel" />
     </data>
 
     <LinearLayout
@@ -41,7 +41,7 @@
 
 
 
-            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+            <com.example.mvvmdemo.customecomponent.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reset_your_password"
@@ -51,7 +51,7 @@
                 app:font_name="RobotoThinItalic.ttf" />
 
 
-            <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+            <com.example.mvvmdemo.customecomponent.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sendt_code"
@@ -66,7 +66,7 @@
                 android:layout_marginTop="@dimen/_30sdp"
                 android:orientation="vertical">
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomEdittext
+                <com.example.mvvmdemo.customecomponent.CustomEdittext
                     android:id="@+id/activity_forgotPass_etEmail"
                     style="@style/editTextStyle_ganaral"
                     android:layout_marginTop="@dimen/_15sdp"
@@ -74,7 +74,7 @@
                     android:inputType="textEmailAddress"
                     app:font_name="RobotoLight.ttf" />
 
-                <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+                <com.example.mvvmdemo.customecomponent.CustomTextView
                     android:id="@+id/activity_forgotPass_tvsubmit"
                     style="@style/textStyle"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
         </LinearLayout>
 
 
-        <com.cmexpertise.beautyapp.customecomponent.CustomTextView
+        <com.example.mvvmdemo.customecomponent.CustomTextView
             android:id="@+id/activity_forgotPass_tvLogin"
             style="@style/textStyle"
             android:layout_width="@dimen/_90sdp"
